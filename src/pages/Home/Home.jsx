@@ -1,9 +1,11 @@
 import React from 'react';
+import StartBanner from "../../components/startBanner/startBanner.jsx";
 
 function Home() {
     return (
         <>
-            <h1>Homepagina</h1>
+            <StartBanner />
+
         </>
     );
 }
