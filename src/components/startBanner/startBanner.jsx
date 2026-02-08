@@ -1,18 +1,29 @@
 import './startBanner.css'
 import React from "react";
+import Button from "../button/button.jsx";
+import {useNavigate} from "react-router-dom";
 
 function StartBanner() {
+    const navigate = useNavigate();
+
     return (
     <>
-        <section className='outer-container start-banner'>
+        <header className='outer-container start-banner'>
             <div className='inner-container start-banner'>
                 <article className='start-card'>
                     <h1>Are you ready to find your plants a new home?</h1>
-                    <button>Start switching leaves</button>
-                    <button>How does it work?</button>
+                    <Button
+                        type="button"
+                        title="Start switching leaves"
+                        onclick={() => navigate('/login')}
+                    />
+                    <Button
+                        type="button"
+                        title="How does it work?"
+                    />
                 </article>
             </div>
-        </section>
+        </header>
     </>
     )
 }
