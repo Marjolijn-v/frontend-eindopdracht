@@ -1,0 +1,69 @@
+.small-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background-color: var(--background-card);
+    padding: 15px;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+
+}
+
+.small-card-visual {
+    position: absolute;
+    top: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 160px;
+
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.circle.large {
+    background-color: var(--green-mid);
+    width: 140px;
+    height: 140px;
+    top: 0;
+    left: 0;
+}
+
+.circle.small {
+    background-color: var(--background-card);
+    width: 60px;
+    height: 60px;
+    top: 20px;
+    right: -20px;
+
+}
+
+.plant-image-small {
+    position: relative;
+    z-index: 1;
+    width: 80px;
+    display: block;
+    margin: 20px auto 0;
+}
+
+.small-card-title {
+
+}
+
+.small-card-description {
+
+
+}
+
+.small-card-location-button {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+
+}

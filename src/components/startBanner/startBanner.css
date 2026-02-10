@@ -1,22 +1,24 @@
-.outer-container {
+.outer-container.start-banner {
     display: flex;
     justify-content: center;
-    margin: 25px;
+    margin: 50px;
 
 }
 
 .inner-container.start-banner {
     display: flex;
     justify-content: center;
-    max-width: 800px;
+    width: 80%;
     background-color: var(--background-card);
-    border-radius: 10px;
+    border-radius: 30px;
+    padding: 30px;
 }
 
 .start-card {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    width: 40%;
     background-color: var(--green-grey);
     border-radius: 10px;
+    padding: 30px;
 }

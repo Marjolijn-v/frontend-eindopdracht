@@ -1,0 +1,14 @@
+.recommended-container {
+    margin: 50px;
+}
+
+.recommended-plant-cards {
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: space-between;*/
+    column-gap: 25px;
+}
+
+.recommended-title {
+    color: white;
+}

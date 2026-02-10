@@ -20,6 +20,7 @@ function StartBanner() {
                     <Button
                         type="button"
                         title="How does it work?"
+                        onclick={() => navigate('/register')}
                     />
                 </article>
             </div>
