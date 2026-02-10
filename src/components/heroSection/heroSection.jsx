@@ -1,15 +1,15 @@
-import './startBanner.css'
+import './heroSection.css'
 import React from "react";
 import Button from "../button/button.jsx";
 import {useNavigate} from "react-router-dom";
 
-function StartBanner() {
+function HeroSection() {
     const navigate = useNavigate();
 
     return (
     <>
-        <header className='outer-container start-banner'>
-            <div className='inner-container start-banner'>
+        <section className='outer-container hero-section'>
+            <div className='inner-container hero-section'>
                 <article className='start-card'>
                     <h1>Are you ready to find your plants a new home?</h1>
                     <Button
@@ -24,9 +24,9 @@ function StartBanner() {
                     />
                 </article>
             </div>
-        </header>
+        </section>
     </>
     )
 }
 
-export default StartBanner;
+export default HeroSection;

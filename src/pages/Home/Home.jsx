@@ -1,13 +1,13 @@
 import './Home.css'
 import React from 'react';
-import StartBanner from "../../components/startBanner/startBanner.jsx";
+import HeroSection from "../../components/heroSection/heroSection.jsx";
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 
 
 function Home() {
     return (
         <>
-            <StartBanner/>
+            <HeroSection/>
             <div className="recommended-container">
                 <h2 className="recommended-title">Recommended for you</h2>
                 <div className="recommended-plant-cards">
