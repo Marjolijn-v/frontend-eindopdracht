@@ -8,17 +8,41 @@
 .inner-container.hero-section {
     display: flex;
     justify-content: center;
-    width: 80%;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 380px;
+    max-width: 1000px;
     background-color: var(--background-card);
     border-radius: 30px;
     padding: 30px;
+    padding-bottom: 60px;
 }
 
 .start-card {
+    position: absolute;
+    left: 200px;
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 100%;
+    max-width: 450px;
     background-color: var(--green-grey);
     border-radius: 10px;
     padding: 30px;
+}
+
+.image-wrapper .hero-image-woman {
+    position: absolute;
+    z-index: 2;
+    left: 150px;
+    bottom: 100px;
+
+}
+
+.image-wrapper .hero-image-window {
+    position: absolute;
+    z-index: 2;
+    right: 150px;
+    bottom: 65px;
+    height: 70%;
 }

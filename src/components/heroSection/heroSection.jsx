@@ -1,29 +1,26 @@
 import './heroSection.css'
 import React from "react";
-import Button from "../button/button.jsx";
-import {useNavigate} from "react-router-dom";
+import plantsWindow from '../../assets/Plants window.png'
+import womanWithPlants from '../../assets/Woman with plants.png'
 
-function HeroSection() {
-    const navigate = useNavigate();
+
+function HeroSection({children}) {
+
 
     return (
     <>
         <section className='outer-container hero-section'>
+            <span className='image-wrapper'>
+                <img src={womanWithPlants} alt="Woman with plants" className='hero-image-woman'/>
+            </span>
             <div className='inner-container hero-section'>
                 <article className='start-card'>
-                    <h1>Are you ready to find your plants a new home?</h1>
-                    <Button
-                        type="button"
-                        title="Start switching leaves"
-                        onclick={() => navigate('/login')}
-                    />
-                    <Button
-                        type="button"
-                        title="How does it work?"
-                        onclick={() => navigate('/register')}
-                    />
+                    {children}
                 </article>
             </div>
+            <span className='image-wrapper'>
+                <img src={plantsWindow} alt="Plants by window" className='hero-image-window'/>
+            </span>
         </section>
     </>
     )
