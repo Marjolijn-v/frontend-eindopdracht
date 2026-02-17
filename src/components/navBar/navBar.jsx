@@ -39,7 +39,7 @@ function NavBar() {
             <div>
                 <Button
                     type="button"
-                    title="Login/Register"
+                    title="Login/Sign Up"
                     onclick={() => navigate('/login')}
                 />
 

@@ -20,7 +20,7 @@ function Login() {
     return (
         <>
             <HeroSection>
-                <h1>Welcome!</h1>
+                <h1>Welcome back!</h1>
                 <form onSubmit={handleSubmit(handleFormSubmit)}>
                     <div className="input-wrapper">
                         <img src={userIcon} alt="User icon" className="input-icon"/>

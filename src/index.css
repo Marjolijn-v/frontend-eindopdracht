@@ -15,11 +15,15 @@
 }
 
 body {
-    font-family: "Karla", sans-serif;
+    font-family: "Arima", system-ui;
     background-color: var(--background-main);
 }
 
 h1,h2,h3,h4 {
     font-family: "Arima", system-ui;
+}
+
+input {
+    font-family: "Karla", sans-serif;
 }
 
