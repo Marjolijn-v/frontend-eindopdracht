@@ -125,6 +125,9 @@ function Register() {
 
             </form>
             </HeroSection>
+            <section>
+                <h2>How it works</h2>
+            </section>
         </>
     );
 }
