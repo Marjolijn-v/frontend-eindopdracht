@@ -1,0 +1,62 @@
+.outer-container.account-page {
+    margin: 50px;
+}
+
+.title.account-page {
+    color: white;
+}
+
+.content.account-page {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.two-article-wrapper.account-page{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+article.details {
+    background-color: var(--background-card);
+    width: 48%;
+    border-radius: 35px;
+    padding: 20px;
+    div {
+        display: flex;
+        flex-wrap: wrap;
+        p {
+            width: 48%;
+        }
+    }
+}
+
+article.messages {
+    background-color: var(--background-card);
+    width: 48%;
+    border-radius: 35px;
+    padding: 20px;
+}
+
+article.my-plants {
+    width: 48%;
+    h3 {
+        background-color: var(--background-card);
+        border-radius: 25px;
+        padding: 20px;
+    }
+
+}
+
+article.saved-plants {
+    width: 48%;
+    h3 {
+        background-color: var(--background-card);
+        border-radius: 25px;
+        padding: 20px;
+    }
+
+}
