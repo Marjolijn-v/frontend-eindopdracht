@@ -1,6 +1,6 @@
 button {
     background-color: var(--dark-green);
-    color: var(--background-card);
+    color: white;
     font-family: inherit;
     border-radius: 20px;
     padding: 8px 20px;

@@ -1,0 +1,48 @@
+.outer-container.plant-details {
+    margin: 50px;
+    h2 {
+        color: white;
+    }
+}
+
+.plant-details-container {
+    background-color: var(--background-card);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 35px;
+    padding: 20px;
+}
+
+.images.plant-details {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.image-large.plant-details {
+    height: 100%;
+
+}
+
+.image-medium.plant-details {
+    height: 48%;
+
+}
+
+
+.info.plant-details {
+    background-color: var(--green-grey);
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    padding: 20px;
+    width: 35%;
+}
+
+.send-message-button {
+    align-self: center;
+}
+
+.recommended-container.plant-details {
+    margin: 0;
+}

@@ -1,16 +1,20 @@
 .header.search-result {
     margin: 50px;
-    display: flex;
-    justify-content: space-between;
+
     h2 {
         color: white;
+    }
+
+    .button {
+        padding: 8px 40px;
+        margin: 0;
     }
 }
 
 .inner-container.search-result {
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 50px;
     margin: 50px;
 }

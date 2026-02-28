@@ -12,6 +12,7 @@ function Search() {
                     <Button
                         title="Filter"
                         type="button"
+                        className="button search-result"
                     />
                 </header>
                 <section className="inner-container search-result">
