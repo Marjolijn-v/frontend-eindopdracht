@@ -7,15 +7,30 @@ import {useForm} from "react-hook-form";
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import Button from "../../components/button/button.jsx";
 import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 
 
 function Login() {
     const { handleSubmit, formState:{ errors}, register } = useForm();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    function handleFormSubmit(data) {
-        console.log(data);
+    async function handleFormSubmit(data) {
+        try {
+            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {
+                email: data.email,
+                password: data.password,
+            }, {
+                headers: {
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3'
+                }
+            });
+            console.log("inloggen is gelukt", response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+
 
     return (
         <>
@@ -65,7 +80,7 @@ function Login() {
                         className="login-button"
                         type="submit"
                         title="Login"
-                        onclick={() => navigate('/login')}
+                        // onclick={() => navigate('/account')}
 
                     />
                     </div>
@@ -83,3 +98,4 @@ function Login() {
 }
 
 export default Login;
+
