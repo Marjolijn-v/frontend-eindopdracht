@@ -1,13 +1,15 @@
 import './Home.css'
-import React from 'react';
+import React, {useContext} from 'react';
 import HeroSection from "../../components/heroSection/heroSection.jsx";
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import Button from "../../components/button/button.jsx";
 import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 
 function Home() {
     const navigate = useNavigate();
+    const {authentication} = useContext(AuthContext);
 
     return (
         <>
@@ -16,7 +18,7 @@ function Home() {
                 <Button
                     type="button"
                     title="Start switching leaves"
-                    onclick={() => navigate('/login')}
+                    onclick={authentication ? (() => navigate('/account')) : (() => navigate('/login')) }
                 />
                 <Button
                     type="button"

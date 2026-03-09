@@ -1,8 +1,14 @@
 import './MyAccount.css'
-import React from 'react';
+import React, {useContext} from 'react';
 import Button from "../../components/button/button.jsx";
+import {AuthContext} from "../../context/AuthContext.jsx";
+
 
 function MyAccount() {
+
+    const { user } = useContext(AuthContext);
+
+
     return (
         <>
             <div className="outer-container account-page">
@@ -14,9 +20,9 @@ function MyAccount() {
                         <article className="details account-page">
                             <h3>My details</h3>
                             <div>
-                                <p>Name</p>
-                                <p>Location</p>
-                                <p>Email address</p>
+                                <p><strong>Name:</strong> {user?.name}</p>
+                                <p><strong>Location:</strong> {user?.location}</p>
+                                <p><strong>Email address:</strong> { user?.email}</p>
                             </div>
                             <Button
                                 title="Change"

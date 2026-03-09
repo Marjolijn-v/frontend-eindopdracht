@@ -55,7 +55,8 @@ function AuthContextProvider({children}){
     function logout() {
         localStorage.removeItem('token');
         toggleAuth({
-            ...auth,
+            isAuth: false,
+            user: null,
             status: 'done',
         });
         navigate('/');
@@ -87,7 +88,9 @@ function AuthContextProvider({children}){
         } catch (e) {
             console.error(e);
             toggleAuth({
-                ...auth,
+                isAuth: false,
+                user: null,
+                status: 'done',
 
             });
         }
@@ -95,6 +98,7 @@ function AuthContextProvider({children}){
 
     const data = {
         authentication: auth.isAuth,
+        user: auth.user,
         login: login,
         logout: logout,
 

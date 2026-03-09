@@ -60,7 +60,7 @@ function NavBar() {
                 <Button
                     type="button"
                     title="Switch your Leafs!"
-                    onclick={() => navigate('/account')}
+                    onclick={authentication ? (() => navigate('/account')) : (() => navigate('/login')) }
                 />
             </div>
         </nav>
