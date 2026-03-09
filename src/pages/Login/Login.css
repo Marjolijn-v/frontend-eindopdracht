@@ -1,0 +1,37 @@
+.login-input {
+    margin-bottom: 15px;
+    background-color: white;
+    width: 100%;
+    border-radius: 20px;
+    border: none;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 10px;
+    top: 15%;
+    width: 16px;
+    height: 16px;
+}
+
+.input-wrapper input {
+    padding-left: 35px;
+}
+
+.login-sub-text {
+    position: absolute;
+    bottom: -20%;
+    max-width: 350px;
+    font-weight: lighter;
+    text-align: center;
+}

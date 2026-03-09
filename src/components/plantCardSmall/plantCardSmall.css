@@ -1,0 +1,87 @@
+.small-card-outer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    width: 300px;
+    height: 450px;
+
+
+}
+
+.small-card-visual {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 160px;
+
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.circle.large {
+    background-color: var(--green-mid);
+    width: 160px;
+    height: 160px;
+    top: -10px;
+    left: 0;
+}
+
+.circle.small {
+    background-color: var(--background-card);
+    width: 60px;
+    height: 60px;
+    top: 80px;
+    right: -35px;
+
+}
+
+.plant-image-small {
+    position: relative;
+    z-index: 1;
+    width: 130px;
+    margin: 20px auto 0;
+    top: 10px;
+}
+.small-card-container{
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-card);
+    padding: 15px;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+}
+
+.small-card-inner-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding-top: 15px;
+
+
+}
+
+.small-card-title {
+
+
+}
+
+.small-card-description {
+    font-size: 0.8rem;
+
+
+}
+
+.small-card-location-button {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+
+}
