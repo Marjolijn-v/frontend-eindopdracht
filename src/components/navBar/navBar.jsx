@@ -10,7 +10,7 @@ function NavBar() {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
 
-    const {authentication, logout, login} = useContext(AuthContext);
+    const {authentication, logout} = useContext(AuthContext);
 
     return(
 
@@ -52,7 +52,7 @@ function NavBar() {
                     <Button
                         type="button"
                         title="Login/Sign Up"
-                        onclick={login}
+                        onclick={() => navigate('/login')}
                     />
                 )}
 

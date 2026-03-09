@@ -9,13 +9,33 @@ import emailIcon from "../../assets/icons/email-icon.png";
 import locationIcon from "../../assets/icons/location-icon.png"
 import Button from "../../components/button/button.jsx";
 import HeroSection from "../../components/heroSection/heroSection.jsx";
+import axios from "axios";
 
 function Register() {
     const { handleSubmit, formState:{ errors}, register } = useForm();
     const navigate = useNavigate();
 
-    function handleFormSubmit(data) {
+    async function handleFormSubmit(data) {
         console.log(data);
+        try {
+            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
+                email: `${data.email}`,
+                password: `${data.password}`,
+                roles: [
+                    'user'
+                ],
+            }, {
+                headers: {
+                    'novi-education-project-id' : '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'Content-Type': 'application/json',
+                }
+            });
+            console.log(response);
+            navigate('/login');
+
+        } catch (e) {
+            console.error(e);
+        }
     }
     return(
         <>
