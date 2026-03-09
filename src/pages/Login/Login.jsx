@@ -1,16 +1,18 @@
 import './Login.css'
 import userIcon from '../../assets/icons/user-icon.png'
 import lockIcon from '../../assets/icons/lock-icon.png'
-import React from 'react';
+import React, {useContext} from 'react';
 import HeroSection from "../../components/heroSection/heroSection.jsx";
 import {useForm} from "react-hook-form";
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import Button from "../../components/button/button.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 
 function Login() {
+    const { login } = useContext(AuthContext);
     const { handleSubmit, formState:{ errors}, register } = useForm();
     // const navigate = useNavigate();
 
@@ -25,6 +27,7 @@ function Login() {
                 }
             });
             console.log("inloggen is gelukt", response.data);
+            login("inloggen is gelukt", response.data);
         } catch (error) {
             console.log(error);
         }
@@ -40,15 +43,15 @@ function Login() {
                     <div className="input-wrapper">
                         <img src={userIcon} alt="User icon" className="input-icon"/>
                         <InputComponent
-                            className="login-input username-field"
-                            inputType="text"
-                            inputName="username"
-                            inputId="username-field"
-                            placeholder="Username"
+                            className="login-input email-field"
+                            inputType="email"
+                            inputName="email"
+                            inputId="email-field"
+                            placeholder="Email Address"
                             validationRules={{
                                 required: {
                                     value: true,
-                                    message: 'Username is required',
+                                    message: 'Email Address is required',
                                 }
                             }}
                             register={register}

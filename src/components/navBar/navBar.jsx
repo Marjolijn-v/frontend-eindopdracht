@@ -1,13 +1,16 @@
 import './navBar.css';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from "../button/button.jsx";
 import logo from '../../assets/logo.png';
 import searchIcon from '../../assets/icons/search-icon.png'
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 function NavBar() {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
+
+    const {authentication, logout, login} = useContext(AuthContext);
 
     return(
 
@@ -18,6 +21,7 @@ function NavBar() {
                     <img className="logo" src={logo} alt="logo"/>
                 </span>
             </Link>
+            {console.log(authentication)}
 
             <div className="search-field">
                 <div className="input-wrapper search-field">
@@ -37,11 +41,21 @@ function NavBar() {
             </div>
 
             <div>
-                <Button
-                    type="button"
-                    title="Login/Sign Up"
-                    onclick={() => navigate('/login')}
-                />
+
+                {authentication ? (
+                    <Button
+                        type="button"
+                        title="Log out"
+                        onclick={logout}
+                    />
+                ) : (
+                    <Button
+                        type="button"
+                        title="Login/Sign Up"
+                        onclick={login}
+                    />
+                )}
+
 
                 <Button
                     type="button"
