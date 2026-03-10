@@ -2,13 +2,14 @@
     display: flex;
     justify-content: center;
     margin: 50px;
+    position: relative;
 
 }
 
 .inner-container.hero-section {
     display: flex;
     justify-content: center;
-    position: relative;
+
     z-index: 1;
     width: 100%;
     height: 380px;
@@ -20,8 +21,6 @@
 }
 
 .start-card {
-    position: absolute;
-    left: 200px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -31,18 +30,24 @@
     padding: 30px;
 }
 
-.image-wrapper .hero-image-woman {
+.hero-image-woman {
     position: absolute;
     z-index: 2;
-    left: 150px;
-    bottom: 100px;
+    left: 5%;
+    bottom: 0;
 
 }
 
-.image-wrapper .hero-image-window {
+.hero-image-window {
     position: absolute;
     z-index: 2;
-    right: 150px;
-    bottom: 65px;
-    height: 70%;
+    right: 0;
+    bottom: -10%;
+
+}
+
+.hero-image-woman,
+.hero-image-window {
+    max-width: 35%;
+    height: auto;
 }

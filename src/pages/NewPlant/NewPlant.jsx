@@ -104,7 +104,6 @@ function NewPlant(){
                     className="register-button"
                     type="submit"
                     title="Save"
-                    // onclick={() => navigate('/login')}
                 />
             </div>
         </form>
