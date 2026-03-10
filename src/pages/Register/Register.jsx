@@ -18,9 +18,9 @@ function Register() {
     async function handleFormSubmit(data) {
         console.log(data);
         try {
-            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
-                email: `${data.email}`,
-                password: `${data.password}`,
+            const userResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
+                email: data.email,
+                password: data.password,
                 roles: [
                     'user'
                 ],
@@ -30,8 +30,22 @@ function Register() {
                     'Content-Type': 'application/json',
                 }
             });
-            console.log(response);
-            navigate('/login');
+
+            const userId = userResponse.data.id;
+
+            const memberResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
+                userId: userId,
+                name: data.username,
+                location: data.location,
+            }, {
+                headers: {
+                    'novi-education-project-id' : '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            console.log(userResponse.data, memberResponse.data);
+
 
         } catch (e) {
             console.error(e);
@@ -65,7 +79,7 @@ function Register() {
                 </div>
 
                 <div className="input-wrapper">
-                    <img src={emailIcon} alt="User icon" className="input-icon"/>
+                    <img src={emailIcon} alt="Email icon" className="input-icon"/>
                     <InputComponent
                         className="register-input email-field"
                         inputType="email"
@@ -84,7 +98,7 @@ function Register() {
                 </div>
 
                 <div className="input-wrapper">
-                    <img src={locationIcon} alt="User icon" className="input-icon"/>
+                    <img src={locationIcon} alt="location icon" className="input-icon"/>
                     <InputComponent
                         className="register-input location-field"
                         inputType="text"
@@ -138,8 +152,7 @@ function Register() {
                         className="register-button"
                         type="submit"
                         title="Sign Up"
-                        onclick={() => navigate('/account')}
-
+                        onclick={() => navigate('/login')}
                     />
                 </div>
 
