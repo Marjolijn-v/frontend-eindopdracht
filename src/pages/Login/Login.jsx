@@ -1,6 +1,7 @@
 import './Login.css'
 import userIcon from '../../assets/icons/user-icon.png'
 import lockIcon from '../../assets/icons/lock-icon.png'
+import emailIcon from '../../assets/icons/email-icon.png'
 import React, {useContext} from 'react';
 import HeroSection from "../../components/heroSection/heroSection.jsx";
 import {useForm} from "react-hook-form";
@@ -41,7 +42,7 @@ function Login() {
                 <h1>Welcome back!</h1>
                 <form onSubmit={handleSubmit(handleFormSubmit)}>
                     <div className="input-wrapper">
-                        <img src={userIcon} alt="User icon" className="input-icon"/>
+                        <img src={emailIcon} alt="Email icon" className="input-icon"/>
                         <InputComponent
                             className="login-input email-field"
                             inputType="email"

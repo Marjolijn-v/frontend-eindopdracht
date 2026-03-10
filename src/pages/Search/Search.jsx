@@ -9,7 +9,7 @@ function Search() {
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
 
-    const [searchResult, setSearchResult] = useState();
+    const [searchResult, setSearchResult] = useState(null);
     const [inputValue, setInputValue] = useState('');
 
     async function searchPlants () {
@@ -19,7 +19,8 @@ function Search() {
 
             const result = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants/${inputValue.toLowerCase()}`, {
                 headers: {
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3'
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    "Accept": "application/json",
                 },
             });
 
@@ -27,9 +28,14 @@ function Search() {
             console.log(result.data[0].namePlant);
             console.log(result.data[0].description);
 
+            if (result.data.length === 0) {
+                toggleError(true);
+                return;
+            }
 
-            setSearchResult(result.data);
-            setInputValue('');
+
+            setSearchResult(result.data[0]);
+            // setInputValue('');
 
 
         } catch (error) {
@@ -74,6 +80,15 @@ function Search() {
                     />
                 </header>
                 <section className="inner-container search-result">
+                    {searchResult && (
+                        <PlantCardSmall
+                            plantName={searchResult?.namePlant}
+                            plantDescription={searchResult.description}
+                            location="Groningen"
+                        />
+                    )}
+
+
                     <PlantCardSmall
                         plantName="Cactus"
                         plantDescription="Lorem ipsum Aenean scelerisque nisi id nisl maximus molestie. Duis ornare purus ut dapibus rutrum. Curabitur magna leo, placerat id sodales nec, auctor non sapien. Nunc sodales massa nibh, vitae iaculis neque imperdiet id. Donec rhoncus pulvinar lobortis. Maecenas dignissim tellus et iaculis blandit."

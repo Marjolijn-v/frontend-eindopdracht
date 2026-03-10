@@ -9,6 +9,7 @@ import Search from "./pages/Search/Search.jsx";
 import PlantDetails from "./pages/PlantDetails/PlantDetails.jsx";
 import {AuthContext} from "./context/AuthContext.jsx";
 import {useContext} from "react";
+import NewPlant from "./pages/NewPlant/NewPlant.jsx";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/plant" element={<PlantDetails />} />
+                    <Route path="/newplant" element={<NewPlant />}/>
                 </Routes>
             </div>
         </>

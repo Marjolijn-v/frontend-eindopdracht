@@ -1,0 +1,31 @@
+.outer-container.new-plant-page {
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.new-plant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: var(--background-card);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.new-plant-form textarea {
+    padding: 5px 10px;
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+}
+
+.new-plant-form input {
+    background-color: white;
+    width: 100%;
+    border-radius: 20px;
+    border: none;
+}
