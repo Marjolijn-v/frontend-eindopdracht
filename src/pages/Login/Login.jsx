@@ -1,8 +1,7 @@
 import './Login.css'
-import userIcon from '../../assets/icons/user-icon.png'
 import lockIcon from '../../assets/icons/lock-icon.png'
 import emailIcon from '../../assets/icons/email-icon.png'
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import HeroSection from "../../components/heroSection/heroSection.jsx";
 import {useForm} from "react-hook-form";
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
@@ -13,12 +12,16 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 
 
 function Login() {
+    const [error, setError] = useState('');
+    const [loading, toggleLoading] = useState(false);
     const { login } = useContext(AuthContext);
     const { handleSubmit, formState:{ errors}, register } = useForm();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     async function handleFormSubmit(data) {
         try {
+            setError('');
+            toggleLoading(true);
             const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {
                 email: data.email,
                 password: data.password,
@@ -29,27 +32,13 @@ function Login() {
             });
             console.log("inloggen is gelukt", response.data);
             login(response.data);
+            navigate('/account');
 
-            const response2 = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
-                headers: {
-                    'accept': 'application/json',
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3'
-                }
-            });
-
-            console.log(response2.data);
-
-            const response3 = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
-                headers: {
-                    'accept': 'application/json',
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3'
-                }
-            });
-
-            console.log(response3.data);
-
-        } catch (error) {
-            console.log(error);
+        } catch (e) {
+            console.error(e);
+            setError(e.response?.data?.message || 'Something went wrong, please try again.');
+        } finally {
+            toggleLoading(false);
         }
     }
 
@@ -57,6 +46,8 @@ function Login() {
 
     return (
         <>
+            {error && <p className="error-text">{error}</p>}
+
             <HeroSection>
                 <h1>Welcome back!</h1>
                 <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -72,6 +63,10 @@ function Login() {
                                 required: {
                                     value: true,
                                     message: 'Email Address is required',
+                                },
+                                pattern: {
+                                    value: /^\S+@\S+$/i,
+                                    message: "Invalid email address"
                                 }
                             }}
                             register={register}
@@ -102,8 +97,8 @@ function Login() {
                         <Button
                         className="login-button"
                         type="submit"
-                        title="Login"
-                        // onclick={() => navigate('/account')}
+                        title={loading ? "Logging in..." : "Login"}
+                        disabled={loading}
 
                     />
                     </div>
