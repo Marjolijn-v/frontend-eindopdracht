@@ -6,7 +6,9 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 
 function MyAccount() {
 
-    const { user } = useContext(AuthContext);
+    const { user, member } = useContext(AuthContext);
+
+
 
 
     return (
@@ -20,8 +22,8 @@ function MyAccount() {
                         <article className="details account-page">
                             <h3>My details</h3>
                             <div>
-                                <p><strong>Name:</strong> {user?.name}</p>
-                                <p><strong>Location:</strong> {user?.location}</p>
+                                <p><strong>Name:</strong> {member?.name}</p>
+                                <p><strong>Location:</strong> {member?.location}</p>
                                 <p><strong>Email address:</strong> { user?.email}</p>
                             </div>
                             <Button

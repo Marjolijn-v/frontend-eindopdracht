@@ -15,6 +15,7 @@ function AuthContextProvider({children}){
         status: 'pending',
     });
     const navigate = useNavigate();
+    const [member, setMember] = useState(null);
 
     useEffect(() => {
         const jwtToken = localStorage.getItem('token');
@@ -75,7 +76,7 @@ function AuthContextProvider({children}){
                 headers: {
                     Authorization: `Bearer ${jwtToken}`,
                     'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
             });
 
@@ -83,7 +84,22 @@ function AuthContextProvider({children}){
                 isAuth: true,
                 user: response.data,
                 status: 'done',
-            })
+            });
+
+            const memberResponse = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}/members`,{
+                headers: {
+                    Authorization: `Bearer ${jwtToken}`,
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            console.log(memberResponse.data);
+            setMember(memberResponse.data);
+
+
+
+
 
         } catch (e) {
             console.error(e);
@@ -101,6 +117,7 @@ function AuthContextProvider({children}){
         user: auth.user,
         login: login,
         logout: logout,
+        member: member,
 
     }
 

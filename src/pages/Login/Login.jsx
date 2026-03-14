@@ -18,6 +18,7 @@ function Login() {
     const { handleSubmit, formState:{ errors}, register } = useForm();
     const navigate = useNavigate();
 
+
     async function handleFormSubmit(data) {
         try {
             setError('');
@@ -32,7 +33,6 @@ function Login() {
             });
             console.log("inloggen is gelukt", response.data);
             login(response.data);
-            navigate('/account');
 
         } catch (e) {
             console.error(e);
@@ -99,6 +99,7 @@ function Login() {
                         type="submit"
                         title={loading ? "Logging in..." : "Login"}
                         disabled={loading}
+                        onclick={() => navigate('/account')}
 
                     />
                     </div>

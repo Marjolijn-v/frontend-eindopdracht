@@ -5,7 +5,8 @@ import App from './App.jsx'
 import { BrowserRouter as Router } from 'react-router-dom';
 import AuthContextProvider from "./context/AuthContext.jsx";
 
-createRoot(document.getElementById('root')).render(
+const root = createRoot(document.getElementById('root'));
+root.render(
     <StrictMode>
         <Router>
             <AuthContextProvider>
@@ -13,5 +14,4 @@ createRoot(document.getElementById('root')).render(
             </AuthContextProvider>
         </Router>
     </StrictMode>,
-    document.getElementById('root'),
 );
