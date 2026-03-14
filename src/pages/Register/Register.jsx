@@ -1,5 +1,5 @@
 import './Register.css'
-import React from 'react';
+import React, {useState} from 'react';
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
@@ -14,10 +14,14 @@ import axios from "axios";
 function Register() {
     const { handleSubmit, formState:{ errors}, register } = useForm();
     const navigate = useNavigate();
+    const [error, setError] = useState('');
+    const [loading, toggleLoading] = useState(false);
 
     async function handleFormSubmit(data) {
         console.log(data);
         try {
+            setError('');
+            toggleLoading(true);
             const userResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
                 email: data.email,
                 password: data.password,
@@ -26,6 +30,7 @@ function Register() {
                 ],
             }, {
                 headers: {
+                    'accept': 'application/json',
                     'novi-education-project-id' : '2767c1c3-13ff-45b7-a2b7-6870077651b3',
                     'Content-Type': 'application/json',
                 }
@@ -36,9 +41,11 @@ function Register() {
             const memberResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
                 userId: userId,
                 name: data.username,
+                email: data.email,
                 location: data.location,
             }, {
                 headers: {
+                    'accept': 'application/json',
                     'novi-education-project-id' : '2767c1c3-13ff-45b7-a2b7-6870077651b3',
                     'Content-Type': 'application/json',
                 }
@@ -46,13 +53,19 @@ function Register() {
 
             console.log(userResponse.data, memberResponse.data);
 
+            navigate('/account');
 
         } catch (e) {
             console.error(e);
+            setError(e.response?.data?.message || 'Something went wrong during registration. Please try again.');
+        } finally {
+            toggleLoading(false);
         }
     }
     return(
         <>
+            {error && <p className="error-text">{error}</p>}
+
             <HeroSection>
             <div className="register-header">
                 <h1>Welcome to Leaf Switch!</h1>
@@ -90,6 +103,10 @@ function Register() {
                             required: {
                                 value: true,
                                 message: 'Email address is required',
+                            },
+                            pattern: {
+                                value: /^\S+@\S+$/i,
+                                message: "Invalid email address"
                             }
                         }}
                         register={register}
@@ -151,8 +168,8 @@ function Register() {
                     <Button
                         className="register-button"
                         type="submit"
-                        title="Sign Up"
-                        onclick={() => navigate('/login')}
+                        title={loading ? "Creating account..." : "Sign Up"}
+                        disabled={loading}
                     />
                 </div>
 

@@ -29,6 +29,25 @@ function Login() {
             });
             console.log("inloggen is gelukt", response.data);
             login(response.data);
+
+            const response2 = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
+                headers: {
+                    'accept': 'application/json',
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3'
+                }
+            });
+
+            console.log(response2.data);
+
+            const response3 = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
+                headers: {
+                    'accept': 'application/json',
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3'
+                }
+            });
+
+            console.log(response3.data);
+
         } catch (error) {
             console.log(error);
         }
