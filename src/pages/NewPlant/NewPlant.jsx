@@ -27,7 +27,7 @@ function NewPlant(){
             const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                 namePlant: data.namePlant,
                 description: data.description,
-                imageUrl: 0,
+                imageUrl: null,
                 userId: user.id,
             }, {
                 headers: {
@@ -38,7 +38,7 @@ function NewPlant(){
             });
 
             console.log(response.data);
-            navigate(`/plants/${response.data.id}`);
+            navigate(`/plant/${response.data.id}`);
 
         } catch (e) {
             console.error(e);

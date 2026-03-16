@@ -15,7 +15,7 @@ function AuthContextProvider({children}){
         status: 'pending',
     });
     const navigate = useNavigate();
-    const [member, setMember] = useState(null);
+    const [member, setMember] = useState([]);
 
     useEffect(() => {
         const jwtToken = localStorage.getItem('token');

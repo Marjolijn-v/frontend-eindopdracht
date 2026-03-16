@@ -1,14 +1,44 @@
 import './MyAccount.css'
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Button from "../../components/button/button.jsx";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
+import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
+import axios from "axios";
 
 
 function MyAccount() {
 
     const { user, member } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const [plants, setPlants] = useState([]);
+
+    useEffect(() => {
+        async function fetchPlants() {
+            const token = localStorage.getItem("token");
+
+            try {
+                const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/plants`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        "Accept": "application/json",
+                    }
+                });
+
+                setPlants(response.data);
+
+            } catch (e) {
+                console.error(e);
+            }
+
+            }
+
+            if (user && user.id) {
+                fetchPlants();
+        }
+    }, [user]);
 
 
 
@@ -41,17 +71,25 @@ function MyAccount() {
                         <article className="my-plants account-page">
                             <h3>My plants</h3>
                             <div>
-                                <div>
-                                    <h4>plant</h4>
-                                </div>
-                                <div>
-                                    <h4>plant</h4>
-                                </div>
+                                {plants.length > 0 ? (
+                                    plants.map(plant => (
+                                        <PlantCardSmall
+                                            key={plant.id}
+                                            id={plant.id}
+                                            plantName={plant.namePlant}
+                                            plantDescription={plant.description}
+                                            location="location"
+
+                                        />
+                                    ))
+                                ) : (
+                                    <p>You've not added any plants yet.</p>
+                                )}
                             </div>
                             <Button
                                 title="Add new plant"
                                 type="button"
-                                onclick={() => navigate('/newplant') }
+                                onClick={() => navigate('/newplant') }
                             />
                         </article>
                         <article className="saved-plants account-page">

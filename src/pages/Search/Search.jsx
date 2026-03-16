@@ -1,9 +1,9 @@
 import './Search.css'
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import Button from "../../components/button/button.jsx";
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import axios from "axios";
-import {AuthContext} from "../../context/AuthContext.jsx";
+
 
 function Search() {
 
