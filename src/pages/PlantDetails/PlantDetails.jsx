@@ -1,13 +1,22 @@
 import './PlantDetails.css'
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import Button from "../../components/button/button.jsx";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import getRandomPlantsByLocation from "../../helpers/getRandomPlantsByLocation.js";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 function PlantDetails() {
     const { id } = useParams();
+    const { user, member } = useContext(AuthContext);
+
     const [plant, setPlant] = useState();
+
+    const [plants, setPlants] = useState([]);
+    const [randomPlants, setRandomPlants] = useState([]);
+    const [message, setMessage] = useState('');
+
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(true);
 
@@ -25,6 +34,38 @@ function PlantDetails() {
                 });
                 setPlant(response.data);
 
+                const plantResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
+                    headers: {
+                        'accept': 'application/json',
+                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    }
+                });
+
+                const memberResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
+                    headers: {
+                        'accept': 'application/json',
+                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    }
+                });
+
+                const locationMap = {};
+                memberResponse.data.forEach(member => {
+                    locationMap[member.userId] = member.location;
+                });
+
+                const plantsWithLocation = plantResponse.data.map(plant => ({
+                    ...plant,
+                    location: locationMap[plant.userId]
+                }));
+
+                setPlants(plantsWithLocation);
+
+                const userLocation = user ? member?.[0]?.location : null;
+                const {plants: randomPlants, message: resultMessage} = getRandomPlantsByLocation(plantsWithLocation, userLocation, 5);
+
+                setRandomPlants(randomPlants);
+                setMessage(resultMessage);
+
             } catch (e) {
                 console.error(e);
             } finally {
@@ -32,7 +73,7 @@ function PlantDetails() {
             }
         }
         fetchPlant();
-    }, [id]);
+    }, [id, user, member]);
 
     return (
         <>
@@ -60,23 +101,23 @@ function PlantDetails() {
                     </div>
                 </section>
                 <section className="recommended-container plant-details">
-                    <h2 className="recommended-title plant-details">Recommended for you</h2>
+                    <h2 className="recommended-title plant-details">You might also like</h2>
                     <div className="recommended-plant-cards plant-details">
-                        <PlantCardSmall
-                            plantName="Cactus"
-                            plantDescription="Lorem ipsum Aenean scelerisque nisi id nisl maximus molestie. Duis ornare purus ut dapibus rutrum. Curabitur magna leo, placerat id sodales nec, auctor non sapien. Nunc sodales massa nibh, vitae iaculis neque imperdiet id. Donec rhoncus pulvinar lobortis."
-                            location="Groningen"
-                        />
-                        <PlantCardSmall
-                            plantName="Cactus"
-                            plantDescription="Lorem ipsum Aenean scelerisque nisi id nisl maximus molestie. Duis ornare purus ut dapibus rutrum. Curabitur magna leo, placerat id sodales nec, auctor non sapien. Nunc sodales massa nibh, vitae iaculis neque imperdiet id. Donec rhoncus pulvinar lobortis."
-                            location="Groningen"
-                        />
-                        <PlantCardSmall
-                            plantName="Cactus"
-                            plantDescription="Lorem ipsum Aenean scelerisque nisi id nisl maximus molestie. Duis ornare purus ut dapibus rutrum. Curabitur magna leo, placerat id sodales nec, auctor non sapien. Nunc sodales massa nibh, vitae iaculis neque imperdiet id. Donec rhoncus pulvinar lobortis."
-                            location="Groningen"
-                        />
+                        {message && <p className="info-message">{message}</p>}
+                        {randomPlants.length === 0 ? (
+                            <p>No plants available</p>
+                        ) : (
+                            randomPlants.map(plant => (
+                                <PlantCardSmall
+                                    key={plant.id}
+                                    id={plant.id}
+                                    plantName={plant.namePlant}
+                                    plantDescription={plant.description}
+                                    location={plant.location}
+
+                                />
+                            ))
+                        )}
                     </div>
 
                 </section>
