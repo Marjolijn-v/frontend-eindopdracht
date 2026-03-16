@@ -4,21 +4,23 @@ import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import Button from "../../components/button/button.jsx";
 import React, {useContext, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext.jsx";
 
 function NewPlant(){
     const { handleSubmit, formState:{ errors}, register } = useForm();
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const [loading, toggleLoading] = useState(false);
     const [error, setError] = useState('');
-    const [newPlantContent, setNewPlantContent] = useState({});
-    const { user } = useContext(AuthContext);
-    const token = localStorage.getItem("token");
+
 
     async function handleFormSubmit(data) {
 
-
+        const token = localStorage.getItem("token");
         console.log(data);
+
         try {
             toggleLoading(true);
             setError('');
@@ -36,7 +38,7 @@ function NewPlant(){
             });
 
             console.log(response.data);
-            setNewPlantContent(response.data);
+            navigate(`/plants/${response.data.id}`);
 
         } catch (e) {
             console.error(e);
@@ -52,12 +54,6 @@ function NewPlant(){
                 <h2>Add new plant</h2>
             </header>
 
-            {newPlantContent && newPlantContent.id ? (
-                <h3>The new plant is successfully added to your account. If you'd like to see the details of the added
-                    plant, please click <Link to={`/plants/${newPlantContent.id}`}>here</Link>.
-                    If you'd like to go back to you're account, please click <Link to={'/account'}>here</Link>.</h3>
-            ) : (
-
                 <section className="outer-container new-plant-page">
                     <p>Upload Photos</p>
                     <form onSubmit={handleSubmit(handleFormSubmit)} className="new-plant-form">
@@ -71,7 +67,7 @@ function NewPlant(){
                                 validationRules={{
                                     required: {
                                         value: true,
-                                        message: "Name of the plant is required"
+                                        message: "Plant name is required"
                                     }
                                 }}
                                 register={register}
@@ -92,21 +88,6 @@ function NewPlant(){
                                 </textarea>
                             </label>
                         </div>
-                        {/*<div className="input-wrapper">*/}
-                        {/*    <InputComponent*/}
-                        {/*        className="plant-input createdAd-field"*/}
-                        {/*        inputType="date"*/}
-                        {/*        inputName="createdAd"*/}
-                        {/*        inputId="createdAd-field"*/}
-                        {/*        placeholder=""*/}
-                        {/*        validationRules={{*/}
-                        {/*            valueAsDate: true,*/}
-                        {/*        }}*/}
-                        {/*        register={register}*/}
-                        {/*        errors={errors}*/}
-                        {/*    />*/}
-
-                        {/*</div>*/}
                         <div className="button-wrapper">
                             <Button
                                 className="register-button"
@@ -115,10 +96,9 @@ function NewPlant(){
                                 disabled={loading}
                             />
                         </div>
-                        {error && <p>{error}</p>}
+                        {error && <p className="error-text">{error}</p>}
                     </form>
                 </section>
-            )}
         </>
     );
 }
