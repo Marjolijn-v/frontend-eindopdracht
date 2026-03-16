@@ -2,11 +2,13 @@ import './MyAccount.css'
 import React, {useContext} from 'react';
 import Button from "../../components/button/button.jsx";
 import {AuthContext} from "../../context/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 function MyAccount() {
 
     const { user, member } = useContext(AuthContext);
+    const navigate = useNavigate();
 
 
 
@@ -49,6 +51,7 @@ function MyAccount() {
                             <Button
                                 title="Add new plant"
                                 type="button"
+                                onclick={() => navigate('/newplant') }
                             />
                         </article>
                         <article className="saved-plants account-page">
