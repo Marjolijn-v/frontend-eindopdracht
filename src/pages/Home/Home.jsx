@@ -25,16 +25,34 @@ function Home() {
             try {
                 toggleLoading(true);
                 setError('');
-                const response = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
+                const plantResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                     headers: {
                         'accept': 'application/json',
                         'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
                     }
                 });
-                setPlants(response.data);
+
+                const memberResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
+                    headers: {
+                        'accept': 'application/json',
+                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    }
+                });
+
+                const locationMap = {};
+                memberResponse.data.forEach(member => {
+                    locationMap[member.userId] = member.location;
+                });
+
+                const plantsWithLocation = plantResponse.data.map(plant => ({
+                    ...plant,
+                    location: locationMap[plant.userId]
+                }));
+
+                setPlants(plantsWithLocation);
 
                 const userLocation = user ? member?.[0]?.location : null;
-                const { plants: randomPlants, message: resultMessage} = getRandomPlantsByLocation(response.data, userLocation, 5);
+                const {plants: randomPlants, message: resultMessage} = getRandomPlantsByLocation(plantsWithLocation, userLocation, 5);
 
                 setRandomPlants(randomPlants);
                 setMessage(resultMessage);

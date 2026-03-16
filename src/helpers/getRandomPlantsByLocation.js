@@ -18,10 +18,16 @@ function getRandomPlantsByLocation(plants, userLocation, count = 5) {
     if (plantsSameLocation.length > 0) {
         const randomPlants = [...plantsSameLocation].sort(() => Math.random() - 0.5);
         return {
-            plants: randomPlants.slice(0,count);
-            message: `No plants found in ${userLocation}, but here are some plants from other locations!`
+            plants: randomPlants.slice(0,count),
+            message: ``
         }
     }
+
+    const randomPlants = [...plants].sort(() => Math.random() -0.5);
+    return {
+        plants: randomPlants.slice(0, count),
+        message: `No plants found in ${userLocation}, but here are some plants from other locations!`
+    };
 
 }
 
