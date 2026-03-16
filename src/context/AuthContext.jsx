@@ -39,7 +39,7 @@ function AuthContextProvider({children}){
 
 
 
-    function login(userDetails){
+    async function login(userDetails) {
         localStorage.setItem('token', userDetails.token);
         toggleAuth({
             isAuth: true,
@@ -49,6 +49,7 @@ function AuthContextProvider({children}){
                 roles: userDetails.user.roles,
             },
         });
+        await checkAuth();
         navigate('/account');
         console.log("Gebruiker is ingelogd");
     }

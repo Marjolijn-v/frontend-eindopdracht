@@ -12,6 +12,9 @@ function MyAccount() {
     const { user, member } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const [error, setError] = useState('');
+    const [loading, toggleLoading] = useState(false);
+
     const [plants, setPlants] = useState([]);
 
     useEffect(() => {
@@ -19,7 +22,10 @@ function MyAccount() {
             const token = localStorage.getItem("token");
 
             try {
-                const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/plants`, {
+                toggleLoading(true);
+                setError('');
+
+                const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${user.id}/plants`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
@@ -27,10 +33,16 @@ function MyAccount() {
                     }
                 });
 
+                console.log("plant data:", response.data);
+                console.log("user:", user);
+
                 setPlants(response.data);
 
             } catch (e) {
-                console.error(e);
+                console.error(e.response?.data);
+                setError('Something went wrong, please try again.')
+            } finally {
+                toggleLoading(false);
             }
 
             }
@@ -45,6 +57,7 @@ function MyAccount() {
 
     return (
         <>
+            {error && <p className="error-text">{error}</p>}
             <div className="outer-container account-page">
                 <header>
                     <h1 className="title account-page">My Account</h1>
@@ -54,8 +67,8 @@ function MyAccount() {
                         <article className="details account-page">
                             <h3>My details</h3>
                             <div>
-                                <p><strong>Name:</strong> {member?.name}</p>
-                                <p><strong>Location:</strong> {member?.location}</p>
+                                <p><strong>Name:</strong> {member[0]?.name}</p>
+                                <p><strong>Location:</strong> {member[0]?.location}</p>
                                 <p><strong>Email address:</strong> { user?.email}</p>
                             </div>
                             <Button
@@ -78,7 +91,7 @@ function MyAccount() {
                                             id={plant.id}
                                             plantName={plant.namePlant}
                                             plantDescription={plant.description}
-                                            location="location"
+                                            location={plant.location}
 
                                         />
                                     ))
@@ -90,6 +103,7 @@ function MyAccount() {
                                 title="Add new plant"
                                 type="button"
                                 onClick={() => navigate('/newplant') }
+                                disabled={loading}
                             />
                         </article>
                         <article className="saved-plants account-page">

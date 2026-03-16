@@ -99,7 +99,7 @@ function Login() {
                         type="submit"
                         title={loading ? "Logging in..." : "Login"}
                         disabled={loading}
-                        onclick={() => navigate('/account')}
+                        onClick={() => navigate('/account')}
 
                     />
                     </div>

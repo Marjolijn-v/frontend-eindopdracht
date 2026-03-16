@@ -18,12 +18,12 @@ function Home() {
                 <Button
                     type="button"
                     title="Start switching leaves"
-                    onclick={authentication ? (() => navigate('/account')) : (() => navigate('/login')) }
+                    onClick={authentication ? (() => navigate('/account')) : (() => navigate('/login')) }
                 />
                 <Button
                     type="button"
                     title="How does it work?"
-                    onclick={() => navigate('/register')}
+                    onClick={() => navigate('/register')}
                 />
             </HeroSection>
 

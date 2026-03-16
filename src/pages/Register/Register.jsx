@@ -1,5 +1,5 @@
 import './Register.css'
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
@@ -10,10 +10,14 @@ import locationIcon from "../../assets/icons/location-icon.png"
 import Button from "../../components/button/button.jsx";
 import HeroSection from "../../components/heroSection/heroSection.jsx";
 import axios from "axios";
+import {AuthContext} from "../../context/AuthContext.jsx";
+
 
 function Register() {
     const { handleSubmit, formState:{ errors}, register } = useForm();
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
+
     const [error, setError] = useState('');
     const [loading, toggleLoading] = useState(false);
 
@@ -52,6 +56,20 @@ function Register() {
             });
 
             console.log(userResponse.data, memberResponse.data);
+
+            const loginResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {
+                email: data.email,
+                password: data.password,
+            }, {
+                headers: {
+                    'accept': 'application/json',
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            login(loginResponse.data);
+
 
             navigate('/account');
 

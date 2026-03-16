@@ -27,7 +27,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/plant/:id" element={<PlantDetails />} />
-                    <Route path="/newplant" element={<NewPlant />}/>
+                    <Route path="/newplant" element={authentication === true ? <NewPlant /> : <Navigate to="/"/>}/>
                 </Routes>
             </div>
         </>

@@ -21,7 +21,7 @@ function NavBar() {
                     <img className="logo" src={logo} alt="logo"/>
                 </span>
             </Link>
-            {console.log(authentication)}
+            {/*{console.log(authentication)}*/}
 
             <div className="search-field">
                 <div className="input-wrapper search-field">
@@ -46,13 +46,13 @@ function NavBar() {
                     <Button
                         type="button"
                         title="Log out"
-                        onclick={logout}
+                        onClick={logout}
                     />
                 ) : (
                     <Button
                         type="button"
                         title="Login/Sign Up"
-                        onclick={() => navigate('/login')}
+                        onClick={() => navigate('/login')}
                     />
                 )}
 
@@ -61,14 +61,14 @@ function NavBar() {
                     <Button
                         type="button"
                         title="My account"
-                        onclick={() => navigate('/account')}
+                        onClick={() => navigate('/account')}
 
                     />
                 ) : (
                     <Button
                         type="button"
                         title="Switch your Leafs!"
-                        onclick={() => navigate('/login')}
+                        onClick={() => navigate('/login')}
                     />
 
                 )}
