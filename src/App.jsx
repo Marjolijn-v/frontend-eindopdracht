@@ -26,7 +26,7 @@ function App() {
                     <Route path="/account" element={authentication === true ? <MyAccount /> : <Navigate to="/"/>} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/search" element={<Search />} />
-                    <Route path="/plant" element={<PlantDetails />} />
+                    <Route path="/plant/:id" element={<PlantDetails />} />
                     <Route path="/newplant" element={<NewPlant />}/>
                 </Routes>
             </div>

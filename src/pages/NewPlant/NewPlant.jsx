@@ -2,24 +2,23 @@ import './NewPlant.css'
 import { useForm } from 'react-hook-form';
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import Button from "../../components/button/button.jsx";
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 function NewPlant(){
-    const { handleSubmit, formState:{ errors}, register } = useForm({
-        defaultValues:{
-            'created-at': new Date().toISOString(),
-        }
-    });
+    const { handleSubmit, formState:{ errors}, register } = useForm();
+    const [loading, toggleLoading] = useState(true);
+    const [error, setError] = useState('');
 
     async function handleFormSubmit(data) {
         console.log(data);
         try {
+            toggleLoading(true);
+            setError('');
             const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                 namePlant: data.namePlant,
                 description: data.description,
                 imageUrl: 0,
-                createdAt: data.createdAt,
                 memberId: 0
             }, {
                 headers: {
@@ -30,8 +29,11 @@ function NewPlant(){
 
             console.log(response.data);
 
-        } catch (error) {
-            console.error(error);
+        } catch (e) {
+            console.error(e);
+            setError("something went wrong, please try again");
+        } finally {
+            toggleLoading(false);
         }
     }
 
@@ -86,24 +88,12 @@ function NewPlant(){
                 />
 
             </div>
-            {/*<div className="input-wrapper">*/}
-            {/*    <InputComponent*/}
-            {/*        className=""*/}
-            {/*        inputType=""*/}
-            {/*        inputName=""*/}
-            {/*        inputId=""*/}
-            {/*        placeholder=""*/}
-            {/*        validationRules={}*/}
-            {/*        register={register}*/}
-            {/*        errors={errors}*/}
-            {/*    />*/}
-
-            {/*</div>*/}
             <div className="button-wrapper">
                 <Button
                     className="register-button"
                     type="submit"
                     title="Save"
+                    // disabled={loading}
                 />
             </div>
         </form>

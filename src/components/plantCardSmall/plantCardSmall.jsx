@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 
 
-function PlantCardSmall( {plantName, plantDescription, location }) {
+function PlantCardSmall( {plantName, plantDescription, location, id }) {
     const navigate = useNavigate();
 
     return(
@@ -29,7 +29,7 @@ function PlantCardSmall( {plantName, plantDescription, location }) {
                             className="button-on-card"
                             type="button"
                             title="Switch!"
-                            onClick={() => navigate('/plant')}
+                            onClick={() => navigate(`/plant/${id}`)}
                         />
                     </div>
                 </div>

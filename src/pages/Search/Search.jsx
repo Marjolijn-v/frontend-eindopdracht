@@ -1,48 +1,50 @@
 import './Search.css'
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Button from "../../components/button/button.jsx";
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import axios from "axios";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 function Search() {
 
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
 
-    const [searchResult, setSearchResult] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
     const [inputValue, setInputValue] = useState('');
+
 
     async function searchPlants () {
         try {
             toggleLoading(true);
             toggleError(false);
 
-            const result = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants/${inputValue.toLowerCase()}`, {
+            const result = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                 headers: {
                     'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
                     "Accept": "application/json",
                 },
             });
 
-            console.log(result.data);
-            console.log(result.data[0].namePlant);
-            console.log(result.data[0].description);
+            const filtered = result.data.filter(plant =>
+                plant.namePlant.toLowerCase().includes(inputValue.toLowerCase())
+            );
 
-            if (result.data.length === 0) {
+            if (filtered.length === 0) {
                 toggleError(true);
+                setSearchResults([]);
                 return;
             }
 
+            setSearchResults(filtered);
 
-            setSearchResult(result.data[0]);
-            // setInputValue('');
-
-
-        } catch (error) {
-            console.error(error);
+        } catch (e) {
+            console.error(e);
             toggleError(true);
+            setSearchResults([]);
         } finally {
             toggleLoading(false);
+
         }
     }
 
@@ -59,16 +61,12 @@ function Search() {
                    onKeyDown={(e) => e.key === "Enter" && searchPlants()}
             />
 
-            <button type="button" onClick={searchPlants} disabled={loading} >Search</button>
+            <button type="button" onClick={searchPlants} disabled={loading} > {loading ? 'Searching... ' : 'Search'}</button>
 
-            {error && <p>Plant not found. Please try again.</p>}
+
 
         </div>
 
-            <div>
-                <h2>{searchResult?.namePlant}</h2>
-                <p>{searchResult?.description}</p>
-            </div>
 
             <div className="outer-container search-result">
                 <header className="header search-result">
@@ -80,30 +78,20 @@ function Search() {
                     />
                 </header>
                 <section className="inner-container search-result">
-                    {searchResult && (
-                        <PlantCardSmall
-                            plantName={searchResult?.namePlant}
-                            plantDescription={searchResult.description}
-                            location="Groningen"
-                        />
+                    {searchResults.length > 0 ? (
+                        searchResults.map(plant => (
+                            <PlantCardSmall
+                                key={plant.id}
+                                id={plant.id}
+                                plantName={plant.namePlant}
+                                plantDescription={plant.description}
+                                location="location"
+
+                            />
+                        ))
+                    ) : (
+                        <p>Plant not found. Please try again.</p>
                     )}
-
-
-                    <PlantCardSmall
-                        plantName="Cactus"
-                        plantDescription="Lorem ipsum Aenean scelerisque nisi id nisl maximus molestie. Duis ornare purus ut dapibus rutrum. Curabitur magna leo, placerat id sodales nec, auctor non sapien. Nunc sodales massa nibh, vitae iaculis neque imperdiet id. Donec rhoncus pulvinar lobortis. Maecenas dignissim tellus et iaculis blandit."
-                        location="Groningen"
-                    />
-                    <PlantCardSmall
-                        plantName="Cactus"
-                        plantDescription="Lorem ipsum Aenean scelerisque nisi id nisl maximus molestie. Duis ornare purus ut dapibus rutrum. Curabitur magna leo, placerat id sodales nec, auctor non sapien. Nunc sodales massa nibh, vitae iaculis neque imperdiet id. Donec rhoncus pulvinar lobortis. Maecenas dignissim tellus et iaculis blandit."
-                        location="Groningen"
-                    />
-                    <PlantCardSmall
-                        plantName="Cactus"
-                        plantDescription="Lorem ipsum Aenean scelerisque nisi id nisl maximus molestie. Duis ornare purus ut dapibus rutrum. Curabitur magna leo, placerat id sodales nec, auctor non sapien. Nunc sodales massa nibh, vitae iaculis neque imperdiet id. Donec rhoncus pulvinar lobortis. Maecenas dignissim tellus et iaculis blandit."
-                        location="Groningen"
-                    />
 
                 </section>
             </div>
