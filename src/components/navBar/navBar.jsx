@@ -23,24 +23,13 @@ function NavBar() {
             </Link>
             {/*{console.log(authentication)}*/}
 
-            <div className="search-field">
-                <div className="input-wrapper search-field">
-
-                    <img src={searchIcon} alt="Search icon" className="search-icon"/>
-
-                <input type="text"
-                       name="search"
-                       id="search-field"
-                       value={inputValue}
-                       placeholder="Search"
-                       onChange={(e) => setInputValue(e.target.value)}
-                       // onKeyDown={(e) => e.key === "Enter" && searchPlants()}
-                />
-                </div>
-
-            </div>
 
             <div>
+                <Button
+                    type="button"
+                    title="Search plants"
+                    onClick={() => navigate('/search')}
+                />
 
                 {authentication ? (
                     <Button

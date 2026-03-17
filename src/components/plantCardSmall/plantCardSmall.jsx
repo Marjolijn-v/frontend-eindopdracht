@@ -1,12 +1,11 @@
 import './plantCardSmall.css';
 import React from "react";
 import Button from "../button/button.jsx";
-import cactus from "../../assets/cactus.jpg"
 import {useNavigate} from "react-router-dom";
 
 
 
-function PlantCardSmall( {plantName, plantDescription, location, id }) {
+function PlantCardSmall( {imageSrc, imageAlt, plantName, plantDescription, location, id }) {
     const navigate = useNavigate();
 
     return(
@@ -15,7 +14,10 @@ function PlantCardSmall( {plantName, plantDescription, location, id }) {
                 <div className="small-card-visual">
                     <div className="circle small"></div>
                     <div className="circle large"></div>
-                    <img src={cactus} alt="cactus" className="plant-image-small"/>
+                    <div className="image-wrapper">
+                        <img src={imageSrc} alt={imageAlt} className= "plant-image-small"/>
+                    </div>
+
                 </div>
                 <div className="small-card-inner-container">
                     <h2 className="small-card-title">{plantName}</h2>

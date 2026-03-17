@@ -11,6 +11,36 @@
     }
 }
 
+.outer-container.search-field {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    align-items: center;
+}
+
+.search-field-wrapper {
+    position: relative;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: var(--background-card);
+    border-radius: 20px;
+}
+
+.search-field-wrapper input {
+    max-height: 40px;
+    border: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    color: white;
+    height: 20px;
+    width: 20px;
+
+}
+
 .inner-container.search-result {
     display: flex;
     /*justify-content: space-between;*/
@@ -18,3 +48,5 @@
     gap: 50px;
     margin: 50px;
 }
+
+

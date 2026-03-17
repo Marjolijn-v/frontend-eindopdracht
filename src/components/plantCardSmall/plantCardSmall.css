@@ -44,9 +44,10 @@
 .plant-image-small {
     position: relative;
     z-index: 1;
-    width: 130px;
+    max-width: 150px;
     margin: 20px auto 0;
     top: 10px;
+    border-radius: 15px;
 }
 .small-card-container{
     height: 280px;

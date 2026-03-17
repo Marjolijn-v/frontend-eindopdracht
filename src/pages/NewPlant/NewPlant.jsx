@@ -20,15 +20,10 @@ function NewPlant(){
 
         const token = localStorage.getItem("token");
 
-        const formData = new FormData();
-        if (data.imageUrl && data.imageUrl.length > 0) {
-            formData.append("image", data.imageUrl[0]);
-        }
-
         try {
             toggleLoading(true);
             setError('');
-            const response = await axios.patch('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
+            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                 namePlant: data.namePlant,
                 description: data.description,
                 userId: user.id,
@@ -40,10 +35,13 @@ function NewPlant(){
                 }
             });
 
+            const plantId = response.data.id;
+
             if (data.imageUrl && data.imageUrl.length > 0) {
-                await axios.patch('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
-                    imageUrl: data.imageUrl,
-                }, {
+                const formData = new FormData();
+                formData.append("image", data.imageUrl[0]);
+
+                await axios.patch(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants/${plantId}`, formData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
@@ -52,7 +50,7 @@ function NewPlant(){
                 });
             }
 
-            console.log(response.data);
+            console.log(response.data, data);
             navigate(`/plant/${response.data.id}`);
 
         } catch (e) {

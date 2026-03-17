@@ -66,6 +66,9 @@ function PlantDetails() {
                 setRandomPlants(randomPlants);
                 setMessage(resultMessage);
 
+                console.log('Plant data:', plant);
+                console.log('Image URL:', plant?.image);
+
             } catch (e) {
                 console.error(e);
             } finally {
@@ -83,9 +86,11 @@ function PlantDetails() {
                 </header>
                 <section className="plant-details-container">
                     <div className="images plant-details">
-                        <img className="image-large plant-details" src={plant?.imageUrl} alt="plant"/>
-                        <img className="image-medium plant-details" src={plant?.image} alt="plant"/>
-                        <img className="image-medium plant-details" src={plant?.image} alt="plant"/>
+                        <img
+                            className="image-large plant-details"
+                            src={`data:${plant?.image?.contentType};base64,${plant?.image?.base64}`}
+                            alt={plant?.namePlant}
+                        />
                     </div>
                     <div className="info plant-details">
                         <h4>Info</h4>
@@ -109,6 +114,8 @@ function PlantDetails() {
                         ) : (
                             randomPlants.map(plant => (
                                 <PlantCardSmall
+                                    imageSrc={`data:${plant?.image?.contentType};base64,${plant?.image?.base64}`}
+                                    imageAlt={plant.namePlant}
                                     key={plant.id}
                                     id={plant.id}
                                     plantName={plant.namePlant}

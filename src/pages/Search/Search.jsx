@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import Button from "../../components/button/button.jsx";
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import axios from "axios";
+import { HiMiniMagnifyingGlass } from "react-icons/hi2";
+import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 
 
 function Search() {
@@ -52,21 +54,23 @@ function Search() {
 
     return(
         <>
-        <div>
-            <input type="text"
-                   name="search"
-                   id="search-field"
-                   value={inputValue}
-                   onChange={(e) => setInputValue(e.target.value)}
-                   onKeyDown={(e) => e.key === "Enter" && searchPlants()}
-            />
+            <div className="outer-container search-field">
+                <div className="search-field-wrapper">
+                    <HiMiniMagnifyingGlass className="search-icon"/>
+                    <input type="text"
+                           name="search"
+                           id="search-field"
+                           value={inputValue}
+                           onChange={(e) => setInputValue(e.target.value)}
+                           onKeyDown={(e) => e.key === "Enter" && searchPlants()}
+                    />
+                </div>
+                    <button type="button" onClick={searchPlants}
+                            disabled={loading}> {loading ? 'Searching... ' : 'Search'}</button>
 
-            <button type="button" onClick={searchPlants} disabled={loading} > {loading ? 'Searching... ' : 'Search'}</button>
 
 
-
-        </div>
-
+            </div>
 
             <div className="outer-container search-result">
                 <header className="header search-result">
@@ -81,6 +85,8 @@ function Search() {
                     {searchResults.length > 0 ? (
                         searchResults.map(plant => (
                             <PlantCardSmall
+                                imageSrc={`data:${plant?.image?.contentType};base64,${plant?.image?.base64}`}
+                                imageAlt={plant.namePlant}
                                 key={plant.id}
                                 id={plant.id}
                                 plantName={plant.namePlant}

@@ -85,7 +85,7 @@ function Home() {
             </HeroSection>
 
             <section className="recommended-container">
-                <h2 className="recommended-title">You might also like</h2>
+                <h2 className="recommended-title">You might like</h2>
                 <div className="recommended-plant-cards">
                     {message && <p className="info-message">{message}</p>}
                     {randomPlants.length === 0 ? (
