@@ -19,15 +19,18 @@ function NewPlant(){
     async function handleFormSubmit(data) {
 
         const token = localStorage.getItem("token");
-        console.log(data);
+
+        const formData = new FormData();
+        if (data.imageUrl && data.imageUrl.length > 0) {
+            formData.append("image", data.imageUrl[0]);
+        }
 
         try {
             toggleLoading(true);
             setError('');
-            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
+            const response = await axios.patch('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                 namePlant: data.namePlant,
                 description: data.description,
-                imageUrl: null,
                 userId: user.id,
             }, {
                 headers: {
@@ -36,6 +39,18 @@ function NewPlant(){
                     'Content-Type': 'application/json',
                 }
             });
+
+            if (data.imageUrl && data.imageUrl.length > 0) {
+                await axios.patch('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
+                    imageUrl: data.imageUrl,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'Content-Type': 'multipart/form-data',
+                    }
+                });
+            }
 
             console.log(response.data);
             navigate(`/plant/${response.data.id}`);
@@ -55,15 +70,33 @@ function NewPlant(){
             </header>
 
                 <section className="outer-container new-plant-page">
-                    <p>Upload Photos</p>
+
                     <form onSubmit={handleSubmit(handleFormSubmit)} className="new-plant-form">
                         <div className="input-wrapper">
+
+                            <InputComponent
+                                className="plant-input image-input"
+                                inputType="file"
+                                accept="image/*"
+                                inputName="imageUrl"
+                                inputId="imageUrl"
+                                inputLabel="Upload a photo of the plant:"
+                                validationRules={{
+                                    required: {
+                                        value: false,
+                                    }
+                                }}
+                                register={register}
+                                errors={errors}
+
+
+                            />
                             <InputComponent
                                 className="plant-input namePlant-field"
                                 inputType="text"
                                 inputName="namePlant"
                                 inputId="namePlant-field"
-                                placeholder="Name of the plant"
+                                inputLabel="Name of the plant:"
                                 validationRules={{
                                     required: {
                                         value: true,
@@ -77,12 +110,13 @@ function NewPlant(){
                         </div>
                         <div className="input-wrapper">
                             <label htmlFor="description-field">
+                                <p>Plant description:</p>
                                 <textarea
                                     id="description-field"
                                     className="plant-input description-field"
                                     rows="4"
                                     cols="40"
-                                    placeholder="Descripe the plant"
+                                    placeholder="Describe the plant"
                                     {...register("description")}
                                 >
                                 </textarea>
