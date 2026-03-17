@@ -9,7 +9,7 @@ import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 
 function Search() {
 
-    const [error, toggleError] = useState(false);
+    const [error, setError] = useState('');
     const [loading, toggleLoading] = useState(false);
 
     const [searchResults, setSearchResults] = useState([]);
@@ -19,7 +19,7 @@ function Search() {
     async function searchPlants () {
         try {
             toggleLoading(true);
-            toggleError(false);
+            setError('');
 
             const result = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                 headers: {
@@ -28,12 +28,35 @@ function Search() {
                 },
             });
 
-            const filtered = result.data.filter(plant =>
-                plant.namePlant.toLowerCase().includes(inputValue.toLowerCase())
-            );
+            const memberResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
+                headers: {
+                    'accept': 'application/json',
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                }
+            });
+
+            const locationMap = {};
+            memberResponse.data.forEach(member => {
+                locationMap[member.userId] = member.location;
+            });
+
+            const plantsWithLocation = result.data.map(plant => ({
+                ...plant,
+                location: locationMap[plant.userId]
+            }));
+
+
+
+            const filtered = plantsWithLocation.filter(plant => {
+                const search = inputValue.toLowerCase();
+
+                return (
+                    plant.namePlant.toLowerCase().includes(search) || plant?.location?.toLowerCase().includes(search)
+                );
+            });
 
             if (filtered.length === 0) {
-                toggleError(true);
+                setError("No plants found");
                 setSearchResults([]);
                 return;
             }
@@ -42,7 +65,7 @@ function Search() {
 
         } catch (e) {
             console.error(e);
-            toggleError(true);
+            setError("No plants found");
             setSearchResults([]);
         } finally {
             toggleLoading(false);
@@ -60,6 +83,7 @@ function Search() {
                     <input type="text"
                            name="search"
                            id="search-field"
+                           placeholder="Enter plant name or location"
                            value={inputValue}
                            onChange={(e) => setInputValue(e.target.value)}
                            onKeyDown={(e) => e.key === "Enter" && searchPlants()}
@@ -72,14 +96,16 @@ function Search() {
 
             </div>
 
+            {error && <p className="error-text">{error}</p>}
+
             <div className="outer-container search-result">
                 <header className="header search-result">
                     <h2>Search results</h2>
-                    <Button
-                        title="Filter"
-                        type="button"
-                        className="button search-result"
-                    />
+                    {/*<Button*/}
+                    {/*    title="Filter"*/}
+                    {/*    type="button"*/}
+                    {/*    className="button search-result"*/}
+                    {/*/>*/}
                 </header>
                 <section className="inner-container search-result">
                     {searchResults.length > 0 ? (
@@ -91,12 +117,12 @@ function Search() {
                                 id={plant.id}
                                 plantName={plant.namePlant}
                                 plantDescription={plant.description}
-                                location="location"
+                                location={plant.location}
 
                             />
                         ))
                     ) : (
-                        <p>Plant not found. Please try again.</p>
+                        <p>Find a plant that needs switching! You can either search on the name of the plant you're looking for or the location.</p>
                     )}
 
                 </section>

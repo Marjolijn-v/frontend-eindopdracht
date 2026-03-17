@@ -89,15 +89,16 @@ function Register() {
                 <h1>Welcome to Leaf Switch!</h1>
                 <p>Create your new account here and start switching.</p>
             </div>
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <form onSubmit={handleSubmit(handleFormSubmit)} className="register-form">
                 <div className="input-wrapper">
                     <img src={userIcon} alt="User icon" className="input-icon"/>
                     <InputComponent
                         className="register-input username-field"
                         inputType="text"
                         inputName="username"
+                        inputLabel="Username"
                         inputId="username-field"
-                        placeholder="Username"
+                        placeholder="Choose a username"
                         validationRules={{
                             required: {
                                 value: true,
@@ -115,6 +116,7 @@ function Register() {
                         className="register-input email-field"
                         inputType="email"
                         inputName="email"
+                        inputLabel="Email address"
                         inputId="email-field"
                         placeholder="Email address"
                         validationRules={{
@@ -138,8 +140,9 @@ function Register() {
                         className="register-input location-field"
                         inputType="text"
                         inputName="location"
+                        inputLabel="Location"
                         inputId="location-field"
-                        placeholder="Location"
+                        placeholder="What is your location?"
                         validationRules={{
                             required: {
                                 value: true,
@@ -157,8 +160,9 @@ function Register() {
                         className="register-input password-field"
                         inputType="password"
                         inputName="password"
+                        inputLabel="Password"
                         inputId="password-field"
-                        placeholder="Password"
+                        placeholder="Choose a password"
                         validationRules={{
                             required: {
                                 value: true,

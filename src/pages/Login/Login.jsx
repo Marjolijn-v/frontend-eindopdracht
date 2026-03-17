@@ -33,10 +33,11 @@ function Login() {
             });
             console.log("inloggen is gelukt", response.data);
             login(response.data);
+            navigate('/account');
 
         } catch (e) {
             console.error(e);
-            setError(e.response?.data?.message || 'Something went wrong, please try again.');
+            setError(e.response?.data?.message || 'Something went wrong, please try again.' );
         } finally {
             toggleLoading(false);
         }
@@ -57,6 +58,7 @@ function Login() {
                             className="login-input email-field"
                             inputType="email"
                             inputName="email"
+                            inputLabel="Email address"
                             inputId="email-field"
                             placeholder="Email Address"
                             validationRules={{
@@ -80,6 +82,7 @@ function Login() {
                             className="login-input password-field"
                             inputType="password"
                             inputName="password"
+                            inputLabel='Password'
                             inputId="password-field"
                             placeholder="Password"
                             validationRules={{
@@ -99,8 +102,6 @@ function Login() {
                         type="submit"
                         title={loading ? "Logging in..." : "Login"}
                         disabled={loading}
-                        onClick={() => navigate('/account')}
-
                     />
                     </div>
 

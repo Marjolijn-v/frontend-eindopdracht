@@ -27,3 +27,10 @@ input, textarea {
     font-family: "Karla", sans-serif;
 }
 
+.error-text {
+    color: orangered;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+

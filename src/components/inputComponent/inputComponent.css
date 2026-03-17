@@ -2,10 +2,6 @@ input {
     padding: 8px;
 }
 
-.error-text {
-    color: orangered;
-    font-size: 0.8rem;
-}
 
 label {
     font-size: 0.8rem;
