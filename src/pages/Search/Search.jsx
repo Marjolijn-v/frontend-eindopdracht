@@ -1,19 +1,25 @@
 import './Search.css'
-import React, {useState} from 'react';
-import Button from "../../components/button/button.jsx";
+import React, {useContext, useState} from 'react';
+
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import axios from "axios";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
-import InputComponent from "../../components/inputComponent/inputComponent.jsx";
+import {AuthContext} from "../../context/AuthContext.jsx";
+import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
+
 
 
 function Search() {
+
+    const { user } = useContext(AuthContext);
+    const { fetchSavedPlants, toggleSavePlant, isSaved } = useContext(SavedPlantsContext);
 
     const [error, setError] = useState('');
     const [loading, toggleLoading] = useState(false);
 
     const [searchResults, setSearchResults] = useState([]);
     const [inputValue, setInputValue] = useState('');
+
 
 
     async function searchPlants () {
@@ -63,6 +69,10 @@ function Search() {
 
             setSearchResults(filtered);
 
+            if (user && user.id) {
+               await fetchSavedPlants(user.id);
+            }
+
         } catch (e) {
             console.error(e);
             setError("No plants found");
@@ -73,6 +83,9 @@ function Search() {
         }
     }
 
+    const handleToggleSave = (plantId) => {
+        toggleSavePlant(plantId, user.id, searchResults);
+    };
 
 
     return(
@@ -118,6 +131,9 @@ function Search() {
                                 plantName={plant.namePlant}
                                 plantDescription={plant.description}
                                 location={plant.location}
+                                user={user}
+                                onToggleSave={handleToggleSave}
+                                isSaved={isSaved(plant.id)}
 
                             />
                         ))

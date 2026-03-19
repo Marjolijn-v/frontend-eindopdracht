@@ -5,17 +5,21 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import axios from "axios";
+import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
+
 
 
 function MyAccount() {
 
     const { user, member } = useContext(AuthContext);
+    const {savedPlants, fetchSavedPlants, toggleSavePlant, isSaved} = useContext(SavedPlantsContext);
     const navigate = useNavigate();
 
     const [error, setError] = useState('');
     const [loading, toggleLoading] = useState(false);
-
     const [plants, setPlants] = useState([]);
+
+
 
     useEffect(() => {
         async function fetchPlants() {
@@ -29,14 +33,13 @@ function MyAccount() {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
-                        "Accept": "application/json",
+                        'Accept': 'application/json',
                     }
                 });
 
-                console.log("plant data:", response.data);
-                console.log("user:", user);
-
                 setPlants(response.data);
+                await fetchSavedPlants(user.id);
+
 
             } catch (e) {
                 console.error(e.response?.data);
@@ -50,7 +53,12 @@ function MyAccount() {
             if (user && user.id) {
                 fetchPlants();
         }
-    }, [user]);
+    }, [user, fetchSavedPlants]);
+
+
+    const handleToggleSave = (plantId) => {
+        toggleSavePlant(plantId, user.id, plants);
+    };
 
 
 
@@ -87,12 +95,16 @@ function MyAccount() {
                                 {plants.length > 0 ? (
                                     plants.map(plant => (
                                         <PlantCardSmall
+                                            imageSrc={`data:${plant?.image?.contentType};base64,${plant?.image?.base64}`}
+                                            imageAlt={plant.namePlant}
                                             key={plant.id}
                                             id={plant.id}
                                             plantName={plant.namePlant}
                                             plantDescription={plant.description}
                                             location={plant.location}
-
+                                            user={user}
+                                            onToggleSave={handleToggleSave}
+                                            isSaved={isSaved(plant.id)}
                                         />
                                     ))
                                 ) : (
@@ -109,12 +121,24 @@ function MyAccount() {
                         <article className="saved-plants account-page">
                             <h3>My saved plants</h3>
                             <div>
-                                <div>
-                                    <h4>plant</h4>
-                                </div>
-                                <div>
-                                    <h4>plant</h4>
-                                </div>
+                                {savedPlants.length > 0 ? (
+                                    savedPlants.map(plant => (
+                                        <PlantCardSmall
+                                            imageSrc={`data:${plant?.image?.contentType};base64,${plant?.image?.base64}`}
+                                            imageAlt={plant.namePlant}
+                                            key={plant.id}
+                                            id={plant.id}
+                                            plantName={plant.namePlant}
+                                            plantDescription={plant.description}
+                                            location={plant.location}
+                                            user={user}
+                                            onToggleSave={handleToggleSave}
+                                            isSaved={true}
+                                        />
+                                    ))
+                                ) : (
+                                    <p>You've not saved any plants yet.</p>
+                                )}
                             </div>
                         </article>
                     </div>

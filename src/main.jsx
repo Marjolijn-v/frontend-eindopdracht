@@ -4,13 +4,16 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter as Router } from 'react-router-dom';
 import AuthContextProvider from "./context/AuthContext.jsx";
+import SavedPlantsProvider from "./context/SavedPlantsContext.jsx";
 
 const root = createRoot(document.getElementById('root'));
 root.render(
     <StrictMode>
         <Router>
             <AuthContextProvider>
-                <App/>
+                <SavedPlantsProvider>
+                    <App/>
+                </SavedPlantsProvider>
             </AuthContextProvider>
         </Router>
     </StrictMode>,

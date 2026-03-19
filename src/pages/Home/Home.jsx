@@ -7,11 +7,13 @@ import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import axios from "axios";
 import getRandomPlantsByLocation from "../../helpers/getRandomPlantsByLocation.js";
+import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
 
 
 function Home() {
     const navigate = useNavigate();
-    const {authentication, user, member} = useContext(AuthContext);
+    const { authentication, user, member } = useContext(AuthContext);
+    const { toggleSavePlant, isSaved } = useContext(SavedPlantsContext);
 
     const [plants, setPlants] = useState([]);
     const [randomPlants, setRandomPlants] = useState([]);
@@ -67,6 +69,10 @@ function Home() {
         fetchPlants();
     }, [user, member]);
 
+    const handleToggleSave = (plantId) => {
+        toggleSavePlant(plantId, user.id, plants);
+    };
+
     return (
         <>
             {error && <p className="error-text">{error}</p>}
@@ -93,12 +99,16 @@ function Home() {
                     ) : (
                         randomPlants.map(plant => (
                             <PlantCardSmall
+                                imageSrc={`data:${plant?.image?.contentType};base64,${plant?.image?.base64}`}
+                                imageAlt={plant.namePlant}
                                 key={plant.id}
                                 id={plant.id}
                                 plantName={plant.namePlant}
                                 plantDescription={plant.description}
                                 location={plant.location}
-
+                                user={user}
+                                onToggleSave={handleToggleSave}
+                                isSaved={isSaved(plant.id)}
                             />
                         ))
                     )}

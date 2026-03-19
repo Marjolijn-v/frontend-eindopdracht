@@ -5,18 +5,21 @@ import Button from "../../components/button/button.jsx";
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import getRandomPlantsByLocation from "../../helpers/getRandomPlantsByLocation.js";
+import { GoHeart, GoHeartFill } from "react-icons/go";
 import {AuthContext} from "../../context/AuthContext.jsx";
+import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
 
 function PlantDetails() {
     const { id } = useParams();
     const { user, member } = useContext(AuthContext);
+    const { toggleSavePlant, isSaved } = useContext(SavedPlantsContext);
 
     const [plant, setPlant] = useState();
 
     const [plants, setPlants] = useState([]);
     const [randomPlants, setRandomPlants] = useState([]);
     const [message, setMessage] = useState('');
-
+    const [savingPlant, setSavingPlant] = useState(false);
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(true);
 
@@ -78,6 +81,21 @@ function PlantDetails() {
         fetchPlant();
     }, [id, user, member]);
 
+    const handleToggleSave = (plantId) => {
+        toggleSavePlant(plantId, user.id, plants);
+    };
+
+    const handleSavePlant = async () => {
+        try {
+            setSavingPlant(true);
+            await handleToggleSave(plant.id);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setSavingPlant(false);
+        }
+    };
+
     return (
         <>
             <div className="outer-container plant-details">
@@ -97,12 +115,24 @@ function PlantDetails() {
                         <p>{plant?.description}</p>
                         <h4>Location</h4>
                         <p>{plant?.location}</p>
-                        <Button
-                            title="Send message"
-                            type="button"
-                            className="send-message-button"
-                            disabled={loading}
-                        />
+                        <div className="button-wrapper">
+                            {user && (
+                                <button
+                                    className="like-button"
+                                    onClick={handleSavePlant}
+                                    disabled={loading}
+                                    aria-label={isSaved(plant?.id) ? "Unsave plant" : "Save plant"}
+                                >
+                                    {isSaved(plant?.id) ? <GoHeartFill/> : <GoHeart/>}
+                                </button>
+                            )}
+                            <Button
+                                title="Send message"
+                                type="button"
+                                className="send-message-button"
+                                disabled={loading}
+                            />
+                        </div>
                     </div>
                 </section>
                 <section className="recommended-container plant-details">
@@ -121,6 +151,9 @@ function PlantDetails() {
                                     plantName={plant.namePlant}
                                     plantDescription={plant.description}
                                     location={plant.location}
+                                    user={user}
+                                    onToggleSave={handleToggleSave}
+                                    isSaved={isSaved(plant.id)}
 
                                 />
                             ))
