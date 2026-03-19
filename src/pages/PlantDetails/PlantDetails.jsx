@@ -8,6 +8,9 @@ import getRandomPlantsByLocation from "../../helpers/getRandomPlantsByLocation.j
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
+import PopupSendMessage from "../../components/popupSendMessage/popupSendMessage.jsx";
+import MessageForm from "../../components/messageForm/messageForm.jsx";
+
 
 function PlantDetails() {
     const { id } = useParams();
@@ -22,6 +25,7 @@ function PlantDetails() {
     const [savingPlant, setSavingPlant] = useState(false);
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(true);
+    const [messagePopup, setMessagePopup] = useState(false);
 
     useEffect(() => {
         async function fetchPlant() {
@@ -131,7 +135,18 @@ function PlantDetails() {
                                 type="button"
                                 className="send-message-button"
                                 disabled={loading}
+                                onClick={() => setMessagePopup(true)}
                             />
+                            <PopupSendMessage trigger={messagePopup} setTrigger={setMessagePopup}>
+                                <h3>Send a message</h3>
+                                <MessageForm
+                                    plantId={plant?.id}
+                                    plantUserId={plant?.userId}
+                                    onSuccess={() => console.log('Message sent')}
+                                    onClose={() => setMessagePopup(false)}
+                                />
+
+                        </PopupSendMessage>
                         </div>
                     </div>
                 </section>

@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import axios from "axios";
 import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
+import MyMessages from "../../components/myMessages/myMessages.jsx";
 
 
 
@@ -18,6 +19,8 @@ function MyAccount() {
     const [error, setError] = useState('');
     const [loading, toggleLoading] = useState(false);
     const [plants, setPlants] = useState([]);
+    const [messages, setMessages] = useState([]);
+    const [messagesLoading, setMessagesLoading] = useState(false);
 
 
 
@@ -55,6 +58,35 @@ function MyAccount() {
         }
     }, [user, fetchSavedPlants]);
 
+    useEffect(() => {
+        async function fetchMessages() {
+            const token = localStorage.getItem("token");
+
+            try {
+                setMessagesLoading(true);
+
+                const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${user.id}/messages`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'Accept': 'application/json',
+                    }
+                });
+
+                setMessages(response.data);
+
+            } catch (e) {
+                console.error('Error fetching messages:', e.response?.data);
+            } finally {
+                setMessagesLoading(false);
+            }
+        }
+
+        if (user && user.id) {
+            fetchMessages();
+        }
+    }, [user]);
+
 
     const handleToggleSave = (plantId) => {
         toggleSavePlant(plantId, user.id, plants);
@@ -86,6 +118,18 @@ function MyAccount() {
                         </article>
                         <article className="messages account-page">
                             <h3>My messages</h3>
+                            <div>
+                                {messagesLoading ? (
+                                    <p>Loading messages...</p>
+                                ) : messages.length > 0 ? (
+                                    messages.map(msg => (
+                                        <MyMessages key={msg.id} message={msg} />
+                                    ))
+                                ) : (
+                                    <p>You haven't received any messages yet.</p>
+                                )}
+                            </div>
+
                         </article>
                     </div>
                     <div className="two-article-wrapper account-page">
