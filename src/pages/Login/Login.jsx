@@ -28,7 +28,7 @@ function Login() {
                 password: data.password,
             }, {
                 headers: {
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3'
+                    'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`
                 }
             });
             console.log("inloggen is gelukt", response.data);

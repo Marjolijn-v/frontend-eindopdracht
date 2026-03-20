@@ -30,7 +30,7 @@ function NewPlant(){
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     'Content-Type': 'application/json',
                 }
             });
@@ -44,7 +44,7 @@ function NewPlant(){
                 await axios.patch(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants/${plantId}`, formData, {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                         'Content-Type': 'multipart/form-data',
                     }
                 });

@@ -80,7 +80,7 @@
 
 }
 
-.small-card-location-button {
+.small-card-button-wrapper {
     display: flex;
     justify-content: space-between;
     color: white;
