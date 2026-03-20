@@ -1,13 +1,26 @@
 import './plantCardSmall.css';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../button/button.jsx";
-import cactus from "../../assets/cactus.jpg"
+import { GoHeart } from "react-icons/go";
+import { GoHeartFill } from "react-icons/go";
 import {useNavigate} from "react-router-dom";
 
 
 
-function PlantCardSmall( {plantName, plantDescription, location }) {
+function PlantCardSmall( {imageSrc, imageAlt, plantName, plantDescription, location, id, user, onToggleSave, isSaved = false }) {
     const navigate = useNavigate();
+    const [isCurrentlySaved, setIsCurrentlySaved] = useState(isSaved);
+
+    useEffect(() => {
+        setIsCurrentlySaved(isSaved);
+    }, [isSaved]);
+
+    const handleSaveClick = async (e) => {
+        e.preventDefault();
+        await onToggleSave(id);
+        setIsCurrentlySaved(!isCurrentlySaved);
+    };
+
 
     return(
         <section className="small-card-outer-container">
@@ -15,7 +28,10 @@ function PlantCardSmall( {plantName, plantDescription, location }) {
                 <div className="small-card-visual">
                     <div className="circle small"></div>
                     <div className="circle large"></div>
-                    <img src={cactus} alt="cactus" className="plant-image-small"/>
+                    <div className="image-wrapper">
+                        <img src={imageSrc} alt={imageAlt} className= "plant-image-small"/>
+                    </div>
+
                 </div>
                 <div className="small-card-inner-container">
                     <h2 className="small-card-title">{plantName}</h2>
@@ -25,11 +41,20 @@ function PlantCardSmall( {plantName, plantDescription, location }) {
                     <p>Location:</p>
                     <p>{location}</p>
                 </span>
+                        {user && (
+                        <button
+                            className="like-button"
+                            onClick={handleSaveClick}
+                            aria-label={isCurrentlySaved ? "Unsave plant" : "Save plant"}
+                        >
+                            {isCurrentlySaved ? <GoHeartFill /> : <GoHeart />}
+                        </button>
+                        )}
                         <Button
                             className="button-on-card"
                             type="button"
                             title="Switch!"
-                            onClick={() => navigate('/plant')}
+                            onClick={() => navigate(`/plant/${id}`)}
                         />
                     </div>
                 </div>

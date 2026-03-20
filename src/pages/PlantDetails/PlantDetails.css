@@ -8,7 +8,7 @@
 .plant-details-container {
     background-color: var(--background-card);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     border-radius: 35px;
     padding: 20px;
 }
@@ -20,12 +20,8 @@
 }
 
 .image-large.plant-details {
-    height: 100%;
-
-}
-
-.image-medium.plant-details {
-    height: 48%;
+    max-height: 380px;
+    border-radius: 35px;
 
 }
 
@@ -46,3 +42,4 @@
 .recommended-container.plant-details {
     margin: 0;
 }
+

@@ -1,5 +1,5 @@
 import './Register.css'
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
@@ -9,30 +9,96 @@ import emailIcon from "../../assets/icons/email-icon.png";
 import locationIcon from "../../assets/icons/location-icon.png"
 import Button from "../../components/button/button.jsx";
 import HeroSection from "../../components/heroSection/heroSection.jsx";
+import axios from "axios";
+import {AuthContext} from "../../context/AuthContext.jsx";
+
 
 function Register() {
     const { handleSubmit, formState:{ errors}, register } = useForm();
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
-    function handleFormSubmit(data) {
+    const [error, setError] = useState('');
+    const [loading, toggleLoading] = useState(false);
+
+    async function handleFormSubmit(data) {
         console.log(data);
+        try {
+            setError('');
+            toggleLoading(true);
+            const userResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
+                email: data.email,
+                password: data.password,
+                roles: [
+                    'user'
+                ],
+            }, {
+                headers: {
+                    'accept': 'application/json',
+                    'novi-education-project-id' : '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            const userId = userResponse.data.id;
+
+            const memberResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
+                userId: userId,
+                name: data.username,
+                email: data.email,
+                location: data.location,
+            }, {
+                headers: {
+                    'accept': 'application/json',
+                    'novi-education-project-id' : '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            console.log(userResponse.data, memberResponse.data);
+
+            const loginResponse = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {
+                email: data.email,
+                password: data.password,
+            }, {
+                headers: {
+                    'accept': 'application/json',
+                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            login(loginResponse.data);
+
+
+            navigate('/account');
+
+        } catch (e) {
+            console.error(e);
+            setError(e.response?.data?.message || 'Something went wrong during registration. Please try again.');
+        } finally {
+            toggleLoading(false);
+        }
     }
     return(
         <>
+            {error && <p className="error-text">{error}</p>}
+
             <HeroSection>
             <div className="register-header">
                 <h1>Welcome to Leaf Switch!</h1>
                 <p>Create your new account here and start switching.</p>
             </div>
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <form onSubmit={handleSubmit(handleFormSubmit)} className="register-form">
                 <div className="input-wrapper">
                     <img src={userIcon} alt="User icon" className="input-icon"/>
                     <InputComponent
                         className="register-input username-field"
                         inputType="text"
                         inputName="username"
+                        inputLabel="Username"
                         inputId="username-field"
-                        placeholder="Username"
+                        placeholder="Choose a username"
                         validationRules={{
                             required: {
                                 value: true,
@@ -45,17 +111,22 @@ function Register() {
                 </div>
 
                 <div className="input-wrapper">
-                    <img src={emailIcon} alt="User icon" className="input-icon"/>
+                    <img src={emailIcon} alt="Email icon" className="input-icon"/>
                     <InputComponent
                         className="register-input email-field"
                         inputType="email"
                         inputName="email"
+                        inputLabel="Email address"
                         inputId="email-field"
                         placeholder="Email address"
                         validationRules={{
                             required: {
                                 value: true,
                                 message: 'Email address is required',
+                            },
+                            pattern: {
+                                value: /^\S+@\S+$/i,
+                                message: "Invalid email address"
                             }
                         }}
                         register={register}
@@ -64,13 +135,14 @@ function Register() {
                 </div>
 
                 <div className="input-wrapper">
-                    <img src={locationIcon} alt="User icon" className="input-icon"/>
+                    <img src={locationIcon} alt="location icon" className="input-icon"/>
                     <InputComponent
                         className="register-input location-field"
                         inputType="text"
                         inputName="location"
+                        inputLabel="Location"
                         inputId="location-field"
-                        placeholder="Location"
+                        placeholder="What is your location?"
                         validationRules={{
                             required: {
                                 value: true,
@@ -88,8 +160,9 @@ function Register() {
                         className="register-input password-field"
                         inputType="password"
                         inputName="password"
+                        inputLabel="Password"
                         inputId="password-field"
-                        placeholder="Password"
+                        placeholder="Choose a password"
                         validationRules={{
                             required: {
                                 value: true,
@@ -117,9 +190,8 @@ function Register() {
                     <Button
                         className="register-button"
                         type="submit"
-                        title="Sign Up"
-                        onclick={() => navigate('/account')}
-
+                        title={loading ? "Creating account..." : "Sign Up"}
+                        disabled={loading}
                     />
                 </div>
 

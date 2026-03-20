@@ -1,21 +1,28 @@
 import './Login.css'
-import userIcon from '../../assets/icons/user-icon.png'
 import lockIcon from '../../assets/icons/lock-icon.png'
-import React from 'react';
+import emailIcon from '../../assets/icons/email-icon.png'
+import React, {useContext, useState} from 'react';
 import HeroSection from "../../components/heroSection/heroSection.jsx";
 import {useForm} from "react-hook-form";
 import InputComponent from "../../components/inputComponent/inputComponent.jsx";
 import Button from "../../components/button/button.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {AuthContext} from "../../context/AuthContext.jsx";
 
 
 function Login() {
+    const [error, setError] = useState('');
+    const [loading, toggleLoading] = useState(false);
+    const { login } = useContext(AuthContext);
     const { handleSubmit, formState:{ errors}, register } = useForm();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+
 
     async function handleFormSubmit(data) {
         try {
+            setError('');
+            toggleLoading(true);
             const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {
                 email: data.email,
                 password: data.password,
@@ -25,8 +32,14 @@ function Login() {
                 }
             });
             console.log("inloggen is gelukt", response.data);
-        } catch (error) {
-            console.log(error);
+            login(response.data);
+            navigate('/account');
+
+        } catch (e) {
+            console.error(e);
+            setError(e.response?.data?.message || 'Something went wrong, please try again.' );
+        } finally {
+            toggleLoading(false);
         }
     }
 
@@ -34,21 +47,28 @@ function Login() {
 
     return (
         <>
+            {error && <p className="error-text">{error}</p>}
+
             <HeroSection>
                 <h1>Welcome back!</h1>
                 <form onSubmit={handleSubmit(handleFormSubmit)}>
                     <div className="input-wrapper">
-                        <img src={userIcon} alt="User icon" className="input-icon"/>
+                        <img src={emailIcon} alt="Email icon" className="input-icon"/>
                         <InputComponent
-                            className="login-input username-field"
-                            inputType="text"
-                            inputName="username"
-                            inputId="username-field"
-                            placeholder="Username"
+                            className="login-input email-field"
+                            inputType="email"
+                            inputName="email"
+                            inputLabel="Email address"
+                            inputId="email-field"
+                            placeholder="Email Address"
                             validationRules={{
                                 required: {
                                     value: true,
-                                    message: 'Username is required',
+                                    message: 'Email Address is required',
+                                },
+                                pattern: {
+                                    value: /^\S+@\S+$/i,
+                                    message: "Invalid email address"
                                 }
                             }}
                             register={register}
@@ -62,6 +82,7 @@ function Login() {
                             className="login-input password-field"
                             inputType="password"
                             inputName="password"
+                            inputLabel='Password'
                             inputId="password-field"
                             placeholder="Password"
                             validationRules={{
@@ -79,9 +100,8 @@ function Login() {
                         <Button
                         className="login-button"
                         type="submit"
-                        title="Login"
-                        // onclick={() => navigate('/account')}
-
+                        title={loading ? "Logging in..." : "Login"}
+                        disabled={loading}
                     />
                     </div>
 
