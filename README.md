@@ -10,6 +10,14 @@ can be saved to their account. When the user finds a plant they really like, the
 a message to the owner of the plant. By providing their email address, the owner can 
 get in touch. 
 
+![Screenshot Home](src/assets/Screenshot%20Home.png)
+
+## Table of content
+
+- Start application
+  - API requests
+- Test the application
+
 
 ## Start application
 
@@ -34,7 +42,13 @@ is needed.
 In the API, test data has been added. However, I recommend making at least two test profiles
 yourself to see how the application works. You can add, save and search plants and send messages
 to the plant owner. To actually see these messages, you should log in as the plant owner.
-You will be provided with a file with plant photo's you can use to add plants. 
+You will be provided with a file with plant photo's you can use to add plants.
+
+#### Log in
+
+Existing test user:
+email: gebruiker@voorbeeld.nl
+password: gebruiker123
 
 
 
