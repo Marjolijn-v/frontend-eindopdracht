@@ -8,7 +8,7 @@ import axios from "axios";
 
 
 
-function PlantCardSmall( {imageSrc, imageAlt, plantName, plantDescription, location, id, user, onToggleSave, isSaved = false }) {
+function PlantCardSmall( {imageSrc, imageAlt, plantName, plantDescription, location, id, user, onToggleSave, isSaved = false, plantUserId, currentUserId }) {
     const navigate = useNavigate();
     const [isCurrentlySaved, setIsCurrentlySaved] = useState(isSaved);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -24,7 +24,14 @@ function PlantCardSmall( {imageSrc, imageAlt, plantName, plantDescription, locat
         setIsCurrentlySaved(!isCurrentlySaved);
     };
 
+    const isOwner = currentUserId && plantUserId && currentUserId === plantUserId;
+
     const handleDelete = async () => {
+        if (!isOwner) {
+            setError('You can only delete plants that you created.');
+            return;
+        }
+
         if (!window.confirm(`Are you sure you want to delete ${plantName}?`)) {
             return;
         }
@@ -77,6 +84,7 @@ function PlantCardSmall( {imageSrc, imageAlt, plantName, plantDescription, locat
                 </span>
                     <div className="small-card-button-wrapper">
                         {error && <p className="error-text">{error}</p>}
+                        {isOwner && (
                         <Button
                             className="button-delete"
                             type="button"
@@ -84,6 +92,7 @@ function PlantCardSmall( {imageSrc, imageAlt, plantName, plantDescription, locat
                             onClick={handleDelete}
                             disabled={isDeleting}
                         />
+                        )}
                         {user && (
                         <button
                             className="like-button"

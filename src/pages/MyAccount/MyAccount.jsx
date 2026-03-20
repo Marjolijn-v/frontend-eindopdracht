@@ -152,7 +152,8 @@ function MyAccount() {
                                             user={user}
                                             onToggleSave={handleToggleSave}
                                             isSaved={isSaved(plant.id)}
-
+                                            plantUserId={plant.userId}
+                                            currentUserId={plant.userId}
                                         />
                                     ))
                                 ) : (
