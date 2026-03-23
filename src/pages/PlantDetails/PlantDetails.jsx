@@ -10,6 +10,7 @@ import {AuthContext} from "../../context/AuthContext.jsx";
 import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
 import PopupSendMessage from "../../components/popupSendMessage/popupSendMessage.jsx";
 import MessageForm from "../../components/messageForm/messageForm.jsx";
+import button from "../../components/button/button.jsx";
 
 
 function PlantDetails() {
@@ -35,7 +36,7 @@ function PlantDetails() {
 
                 const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants/${id}`, {
                     headers: {
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                         "Accept": "application/json",
                     },
                 });
@@ -44,14 +45,14 @@ function PlantDetails() {
                 const plantResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                     headers: {
                         'accept': 'application/json',
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     }
                 });
 
                 const memberResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
                     headers: {
                         'accept': 'application/json',
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     }
                 });
 
@@ -84,6 +85,8 @@ function PlantDetails() {
         }
         fetchPlant();
     }, [id, user, member]);
+
+
 
     const handleToggleSave = (plantId) => {
         toggleSavePlant(plantId, user.id, plants);
@@ -165,7 +168,7 @@ function PlantDetails() {
                                     id={plant.id}
                                     plantName={plant.namePlant}
                                     plantDescription={plant.description}
-                                    location={plant.location}
+                                    location={plant?.location}
                                     user={user}
                                     onToggleSave={handleToggleSave}
                                     isSaved={isSaved(plant.id)}

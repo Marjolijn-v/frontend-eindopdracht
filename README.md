@@ -1,16 +1,59 @@
-# React + Vite
+# Welcome to Leaf Switch!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Introduction
+Welcome to the web-application of Leaf Switch, a platform for exchanging plants.
+With this app, users can find a new home for plants that they don't longer want but still 
+look perfectly fine. They can make their own profile and upload plants. On the search page
+the user can look for plants by plant name or location. The plants that they're interested
+can be saved to their account. When the user finds a plant they really like, the can send 
+a message to the owner of the plant. By providing their email address, the owner can 
+get in touch. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Screenshot Home](src/assets/Screenshot%20Home.png)
 
-## React Compiler
+## Table of content
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Start application
+  - API requests
+- Test the application
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Start application
+
+You can clone this project to your locale machine.
+1. Install `node-modules` by running `npm install` in the terminal.
+2. Run the application by entering `npm run dev` in the terminal.
+3. Open  [http://localhost:5173]( http://localhost:5173) to see the application in the browser.
+
+### Api requests
+
+The application uses the NOVI Dynamic API as a backend. For making requests, an API key 
+is needed. 
+1. In the root, make a `.env` file.
+2. Copy the variables from the `.env.dist` file into the `.env` file you just created.
+3. The key you can use for this project is: `2767c1c3-13ff-45b7-a2b7-6870077651b3`.
+4. If you've already started runtime, stop the development server. (CTRL + C)
+5. Now run `npm run build` in the terminal.
+6. When this is finished you can start the application again. `npm run dev`
+
+## Test the application
+
+In the API, test data has been added. However, I recommend making at least two test profiles
+yourself to see how the application works. You can add, save and search plants and send messages
+to the plant owner. To actually see these messages, you should log in as the plant owner.
+You will be provided with a file with plant photo's you can use to add plants.
+
+#### Log in
+
+Existing test user:
+email: gebruiker@voorbeeld.nl
+password: gebruiker123
+
+
+
+
+
+
+
+

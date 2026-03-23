@@ -29,7 +29,7 @@ function Search() {
 
             const result = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                 headers: {
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     "Accept": "application/json",
                 },
             });
@@ -37,7 +37,7 @@ function Search() {
             const memberResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
                 headers: {
                     'accept': 'application/json',
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                 }
             });
 

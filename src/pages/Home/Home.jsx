@@ -30,14 +30,14 @@ function Home() {
                 const plantResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/plants', {
                     headers: {
                         'accept': 'application/json',
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     }
                 });
 
                 const memberResponse = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/members', {
                     headers: {
                         'accept': 'application/json',
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     }
                 });
 

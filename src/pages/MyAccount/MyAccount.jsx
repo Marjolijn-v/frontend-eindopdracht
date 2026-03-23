@@ -7,6 +7,7 @@ import PlantCardSmall from "../../components/plantCardSmall/plantCardSmall.jsx";
 import axios from "axios";
 import {SavedPlantsContext} from "../../context/SavedPlantsContext.jsx";
 import MyMessages from "../../components/myMessages/myMessages.jsx";
+import button from "../../components/button/button.jsx";
 
 
 
@@ -35,7 +36,7 @@ function MyAccount() {
                 const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${user.id}/plants`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                         'Accept': 'application/json',
                     }
                 });
@@ -58,6 +59,7 @@ function MyAccount() {
         }
     }, [user, fetchSavedPlants]);
 
+
     useEffect(() => {
         async function fetchMessages() {
             const token = localStorage.getItem("token");
@@ -68,7 +70,7 @@ function MyAccount() {
                 const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${user.id}/messages`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                         'Accept': 'application/json',
                     }
                 });
@@ -114,6 +116,7 @@ function MyAccount() {
                             <Button
                                 title="Change"
                                 type="button"
+                                onClick={() => navigate('/register', { state: { isEditMode: true }})}
                             />
                         </article>
                         <article className="messages account-page">
@@ -145,10 +148,12 @@ function MyAccount() {
                                             id={plant.id}
                                             plantName={plant.namePlant}
                                             plantDescription={plant.description}
-                                            location={plant.location}
+                                            location={plant?.location}
                                             user={user}
                                             onToggleSave={handleToggleSave}
                                             isSaved={isSaved(plant.id)}
+                                            plantUserId={plant.userId}
+                                            currentUserId={plant.userId}
                                         />
                                     ))
                                 ) : (

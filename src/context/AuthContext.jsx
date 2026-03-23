@@ -76,7 +76,7 @@ function AuthContextProvider({children}){
             const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${jwtToken}`,
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     'Content-Type': 'application/json',
                 },
             });
@@ -90,12 +90,13 @@ function AuthContextProvider({children}){
             const memberResponse = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}/members`,{
                 headers: {
                     Authorization: `Bearer ${jwtToken}`,
-                    'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                    'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                     'Content-Type': 'application/json',
                 },
             });
 
-            console.log(memberResponse.data);
+            console.log("userResponse: ", response.data)
+            console.log("MemberResponse: ", memberResponse.data);
             setMember(memberResponse.data);
 
 
@@ -103,7 +104,8 @@ function AuthContextProvider({children}){
 
 
         } catch (e) {
-            console.error(e);
+            console.error('Full error:', e.response);
+            // console.error(e);
             toggleAuth({
                 isAuth: false,
                 user: null,

@@ -17,7 +17,7 @@ export function SavedPlantsProvider({ children }) {
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                        'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                         'Accept': 'application/json',
                     }
                 }
@@ -54,7 +54,7 @@ export function SavedPlantsProvider({ children }) {
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
-                            'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                            'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                         }
@@ -69,8 +69,7 @@ export function SavedPlantsProvider({ children }) {
                 setSavedPlantRecordMap(newMap);
             } else {
                 // Save
-                const response = await axios.post(
-                    `https://novi-backend-api-wgsgz.ondigitalocean.app/api/savedPlants`,
+                const response = await axios.post(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/savedPlants`,
                     {
                         "userId": userId,
                         "plantId": plantId
@@ -78,7 +77,7 @@ export function SavedPlantsProvider({ children }) {
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
-                            'novi-education-project-id': '2767c1c3-13ff-45b7-a2b7-6870077651b3',
+                            'novi-education-project-id': `${import.meta.env.VITE_API_KEY}`,
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                         }
