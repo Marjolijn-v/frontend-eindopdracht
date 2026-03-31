@@ -82,29 +82,19 @@ password: gebruiker123
 
 ## Sources
 
-### UI Design & Images
-Kel.ORION Community. (n.d.). *UI Kit - Kel.ORION Community*. Figma. Retrieved March 31, 2026, from https://figma.com/design/n83Sf4CmLx87fpAjpzduj5/UI-Kit---Kel.ORION--Community-?node-id=0-1&p=f&t=N9T9P3FMSrRkB0Lo-0
+Anthropic. (2024). Claude [Large language model]. https://claude.ai/
 
-*Note: All images and design inspiration used in this application are sourced from the UI Kit mentioned above.*
+Course lesson recordings. (2025). [Video lectures]. NOVI Learning platform.
 
-### Icon Library
-Holberton, S. (2021). *React Icons* [Software library]. Retrieved from https://react-icons.github.io/react-icons/
+Holberton, S. (2021). React Icons [Software library]. Retrieved from https://react-icons.github.io/react-icons/
 
+Kel.ORION Community. (n.d.). UI Kit - Kel.ORION Community. Figma. Retrieved from https://figma.com/design/n83Sf4CmLx87fpAjpzduj5/UI-Kit---Kel.ORION--Community-?node-id=0-1&p=f&t=N9T9P3FMSrRkB0Lo-0
 
-### Code support
-NOVI Learning. (n.d.). EdHub - Education platform.
-Retrieved from https://www.edhub.nl/
+NOVI Learning. (n.d.). EdHub - Education platform. Retrieved from https://www.edhub.nl/
 
-Course lesson recordings. (2025). [Video lectures].
-NOVI Learning platform.
+OpenAI. (2024). ChatGPT (Version 4) [Large language model]. https://chatgpt.com/
 
-SME's. (2026). [Personal communication and guidance]. 
-
-OpenAI. (2024). ChatGPT (Version 4) [Large language model].
-https://chatgpt.com/
-
-Anthropic. (2024). Claude [Large language model].
-https://claude.ai/
+SME's. (2026). [Personal communication and guidance].
 
 
 
