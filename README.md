@@ -14,8 +14,9 @@ get in touch.
 
 ## Table of content
 
-- Start application
+- Start applicationgit
   - API requests
+  - Technologies and Frameworks
 - Test the application
 
 
@@ -36,6 +37,33 @@ is needed.
 4. If you've already started runtime, stop the development server. (CTRL + C)
 5. Now run `npm run build` in the terminal.
 6. When this is finished you can start the application again. `npm run dev`
+
+
+### Technologies and Frameworks
+
+This project uses the following technologies and frameworks:
+
+**Frontend Framework & Build Tools:**
+- React 19.2.0 - JavaScript library for building the user interface
+- Vite 7.2.4 - Build tool and development server
+- React Router DOM 7.13.0 - Routing for single-page applications
+
+**State Management & Form Handling:**
+- React Hook Form 7.71.1 - Form handling
+- JWT Decode 4.0.0 - JSON Web Token decoder for authentication
+
+**HTTP Client:**
+- Axios 1.13.6 - For API requests
+
+**UI & Icons:**
+- React Icons 5.6.0 - Icon library 
+
+**Backend:**
+- NOVI Dynamic API - RESTful API for data en authentication
+
+**Development Tools:**
+- ESLint 9.39.1 - Code quality and linting
+
 
 ## Test the application
 
